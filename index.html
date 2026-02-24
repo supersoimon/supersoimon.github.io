@@ -97,6 +97,79 @@
             box-shadow: 0 30px 80px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.05);
         }
 
+        /* --- Table of Contents Slide --- */
+        .slide-toc {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: white;
+            padding: 60px;
+        }
+        
+        .toc-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .toc-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 Columns for full width feel */
+            gap: 30px;
+            width: 90%;
+            max-width: 1400px;
+        }
+
+        .toc-item {
+            background: #F8F9FA;
+            padding: 40px 30px;
+            border-radius: 4px;
+            border-left: 5px solid #00994d;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .slide.active .toc-item {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .toc-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            background: #fff;
+        }
+
+        .toc-number {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #00994d;
+            margin-bottom: 10px;
+            display: block;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .toc-headline {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #1c1c1c;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .toc-desc {
+            font-size: 1.1rem;
+            color: #666;
+            line-height: 1.6;
+        }
+
         /* --- Content Slide Specifics --- */
         .slide-content {
             display: flex;
@@ -458,7 +531,45 @@
             </div>
         </div>
 
-        <!-- Slide 2: Builds Real Skills -->
+        <!-- Slide 2: Table of Contents -->
+        <div class="slide slide-toc">
+            <div class="toc-container">
+                <div class="toc-grid">
+                    <div class="toc-item slide-up delay-1">
+                        <span class="toc-number">01</span>
+                        <span class="toc-headline">Builds Real Skills</span>
+                        <span class="toc-desc">Learn CAD, engineering processes, and problem-solving for future careers.</span>
+                    </div>
+                    <div class="toc-item slide-up delay-2">
+                        <span class="toc-number">02</span>
+                        <span class="toc-headline">School Projects</span>
+                        <span class="toc-desc">Create high-quality models and professional presentations for class.</span>
+                    </div>
+                    <div class="toc-item slide-up delay-3">
+                        <span class="toc-number">03</span>
+                        <span class="toc-headline">Real-world Prints</span>
+                        <span class="toc-desc">Solve household problems with custom tools and replacement parts.</span>
+                    </div>
+                    <div class="toc-item slide-up delay-1">
+                        <span class="toc-number">04</span>
+                        <span class="toc-headline">Fosters Creativity</span>
+                        <span class="toc-desc">Innovate and bring imaginative ideas to life through rapid prototyping.</span>
+                    </div>
+                    <div class="toc-item slide-up delay-2">
+                        <span class="toc-number">05</span>
+                        <span class="toc-headline">Competitive Robotics</span>
+                        <span class="toc-desc">Essential for FTC/FRC prototyping, custom parts, and competition repairs.</span>
+                    </div>
+                    <div class="toc-item slide-up delay-3">
+                        <span class="toc-number">06</span>
+                        <span class="toc-headline">Comparison</span>
+                        <span class="toc-desc">Why Bambu A1 outperforms the Ender 3 in speed, reliability, and features.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Builds Real Skills -->
         <div class="slide slide-content">
             <div class="content-text-side">
                 <div class="slide-up delay-1">
@@ -480,7 +591,7 @@
             </div>
         </div>
 
-        <!-- Slide 3: School Projects -->
+        <!-- Slide 4: School Projects -->
         <div class="slide slide-content">
             <div class="content-text-side">
                 <div class="slide-up delay-1">
@@ -502,7 +613,7 @@
             </div>
         </div>
 
-        <!-- Slide 4: Real-world Prints -->
+        <!-- Slide 5: Real-world Prints -->
         <div class="slide slide-content">
             <div class="content-text-side">
                 <div class="slide-up delay-1">
@@ -524,7 +635,7 @@
             </div>
         </div>
 
-        <!-- Slide 5: Fosters Creativity -->
+        <!-- Slide 6: Fosters Creativity -->
         <div class="slide slide-content">
             <div class="content-text-side">
                 <div class="slide-up delay-1">
@@ -546,7 +657,7 @@
             </div>
         </div>
 
-        <!-- Slide 6: Competitive Robotics (FTC & FRC) -->
+        <!-- Slide 7: Competitive Robotics (FTC & FRC) -->
         <div class="slide slide-content">
             <div class="content-text-side">
                 <div class="slide-up delay-1">
@@ -564,12 +675,12 @@
             </div>
             <div class="content-image-side">
                 <div class="image-container">
-                    <img src="frc.jpg" alt="Robotics Application">
+                    <img src="6_bambu.jpg" alt="Robotics Application">
                 </div>
             </div>
         </div>
 
-        <!-- Slide 7: Comparison -->
+        <!-- Slide 8: Comparison -->
         <div class="slide slide-comparison">
             <!-- Bambu Side -->
             <div class="comparison-column comp-bambu">
