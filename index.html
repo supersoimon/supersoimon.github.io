@@ -56,7 +56,7 @@
             position: relative;
         }
 
-        /* Overlay to ensure text readability over any image */
+        /* Overlay to ensure text readability */
         .slide-title::before {
             content: '';
             position: absolute;
@@ -64,7 +64,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.4); /* Dark overlay */
+            background: rgba(0, 0, 0, 0.45); 
             z-index: 1;
         }
 
@@ -78,8 +78,8 @@
             border-radius: 20px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             text-align: center;
-            max-width: 800px;
-            border-bottom: 6px solid #00d06c; /* Bambu Green Accent */
+            max-width: 850px;
+            border-bottom: 6px solid #00a651; /* Darker Green Accent */
             transform: translateY(20px);
             transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
         }
@@ -118,7 +118,7 @@
             overflow: hidden;
         }
 
-        /* Diagonal accent graphic behind image */
+        /* Subtle moving background element */
         .content-image-side::before {
             content: '';
             position: absolute;
@@ -126,7 +126,7 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: linear-gradient(135deg, transparent 40%, rgba(0, 208, 108, 0.05) 50%, transparent 60%);
+            background: linear-gradient(135deg, transparent 40%, rgba(0, 166, 81, 0.05) 50%, transparent 60%); /* Darker Green tint */
             animation: rotateBg 20s linear infinite;
         }
 
@@ -135,7 +135,7 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Image Container within Content Slide */
+        /* Image Container */
         .image-container {
             position: relative;
             z-index: 2;
@@ -191,7 +191,7 @@
             left: 0;
             width: 60px;
             height: 5px;
-            background-color: #00d06c;
+            background-color: #00a651; /* Darker Green */
             border-radius: 3px;
         }
 
@@ -225,7 +225,7 @@
             top: 8px;
             width: 8px;
             height: 8px;
-            background-color: #00d06c;
+            background-color: #00a651; /* Darker Green */
             border-radius: 50%;
         }
 
@@ -264,10 +264,10 @@
             top: 0;
             left: 0;
             height: 4px;
-            background: linear-gradient(90deg, #00d06c, #00a651);
+            background: linear-gradient(90deg, #00a651, #008039); /* Darker Green Gradient */
             z-index: 200;
             transition: width 0.3s ease;
-            box-shadow: 0 0 10px rgba(0, 208, 108, 0.5);
+            box-shadow: 0 0 10px rgba(0, 166, 81, 0.5);
         }
 
         /* Animation classes */
@@ -295,7 +295,7 @@
 
     <div class="slide-container">
 
-        <!-- Slide 1: Title (Full Background Image) -->
+        <!-- Slide 1: Title -->
         <div class="slide slide-title active">
             <div class="floating-box">
                 <h1>Why Getting a Bambu A1 is a Smart Decision</h1>
@@ -303,26 +303,20 @@
             </div>
         </div>
 
-        <!-- Slide 2: Learning Tool -->
+        <!-- Slide 2: Builds Real Skills -->
         <div class="slide slide-content">
             <div class="content-text-side">
                 <div class="slide-up delay-1">
-                    <h2>1. It's a Learning Tool</h2>
+                    <h2>1. Builds Real Skills</h2>
                 </div>
                 <div class="slide-up delay-2">
-                    <p>A 3D printer isn’t just for fun — it teaches real STEM skills:</p>
-                    <ul>
-                        <li>CAD design (3D modeling software)</li>
-                        <li>Engineering thinking (design → test → improve)</li>
-                        <li>Problem-solving when prints fail</li>
-                    </ul>
-                    <p style="font-size: 1.1rem; color: #666;">These are valuable skills used in engineering and technology careers.</p>
+                    <p>I can learn how to engineer, and about the engineering process. Buying a 3D printer means learning how to CAD, design my own parts, and engineer. This will greatly help me with robotics, and my later life.</p>
                 </div>
             </div>
             <div class="content-image-side">
                 <div class="image-container slide-up delay-3">
                     <div class="image-placeholder">
-                        [ Space for Image: Student designing in CAD software ]
+                        [ Space for Image: Robotics parts or CAD interface ]
                     </div>
                 </div>
             </div>
@@ -332,47 +326,54 @@
         <div class="slide slide-content">
             <div class="content-text-side">
                 <div class="slide-up delay-1">
-                    <h2>2. Used for School Projects</h2>
+                    <h2>2. School Projects</h2>
                 </div>
                 <div class="slide-up delay-2">
-                    <p>A 3D printer allows me to go beyond basic materials and create:</p>
-                    <ul>
-                        <li>Detailed Science Models</li>
-                        <li>Engineering Prototypes</li>
-                        <li>Creative Design Projects</li>
-                    </ul>
-                    <p style="font-size: 1.1rem; color: #666;">This helps me stand out and produce higher-quality work.</p>
+                    <p>For school projects, I am now able to make things out of a high-quality material instead of cardboard, making them easier, and more fun.</p>
                 </div>
             </div>
             <div class="content-image-side">
                 <div class="image-container slide-up delay-3">
                     <div class="image-placeholder">
-                        [ Space for Image: High-quality school project model ]
+                        [ Space for Image: High-quality school model vs cardboard ]
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 4: Reliability -->
+        <!-- Slide 4: Real-world Prints -->
         <div class="slide slide-content">
             <div class="content-text-side">
                 <div class="slide-up delay-1">
-                    <h2>3. Reliability & Quality</h2>
+                    <h2>3. Real-world Prints</h2>
                 </div>
                 <div class="slide-up delay-2">
-                    <p>Unlike cheaper alternatives, the Bambu A1 offers:</p>
-                    <ul>
-                        <li>Superior print consistency</li>
-                        <li>Higher quality finish</li>
-                        <li>Advanced safety features</li>
-                    </ul>
-                    <p style="font-size: 1.1rem; color: #666;">Less time fixing problems, more time creating.</p>
+                    <p>This 3D printer would let me print things that we can use in our household, like phone holders, hooks, or replacement parts for broken things.</p>
                 </div>
             </div>
             <div class="content-image-side">
                 <div class="image-container slide-up delay-3">
                     <div class="image-placeholder">
-                        [ Space for Image: Bambu A1 Printer or successful print ]
+                        [ Space for Image: Phone holder or household fixes ]
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Fosters Creativity -->
+        <div class="slide slide-content">
+            <div class="content-text-side">
+                <div class="slide-up delay-1">
+                    <h2>4. Fosters Creativity</h2>
+                </div>
+                <div class="slide-up delay-2">
+                    <p>By having a 3D printer, I can print what I want to print. I am able to design, and innovate, making my own ideas come to life.</p>
+                </div>
+            </div>
+            <div class="content-image-side">
+                <div class="image-container slide-up delay-3">
+                    <div class="image-placeholder">
+                        [ Space for Image: Creative custom designs ]
                     </div>
                 </div>
             </div>
