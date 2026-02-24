@@ -178,7 +178,7 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            justify-content: space-between; /* Distribute space between header and specs */
+            justify-content: space-between;
             height: 100%;
             position: relative;
             padding: 40px;
@@ -222,20 +222,20 @@
         .comp-bambu .comp-logo { color: #00a651; }
         .comp-ender .comp-logo { color: #555; }
 
-        /* Comparison Specs List - Now taking up available space */
+        /* Comparison Specs List */
         .comp-specs {
             list-style: none;
             padding: 0;
             margin: 0;
             display: flex;
             flex-direction: column;
-            flex-grow: 1; /* Takes remaining vertical space */
-            justify-content: space-around; /* Evenly spaces items vertically */
+            flex-grow: 1;
+            justify-content: space-around;
         }
 
         .comp-spec-item {
             text-align: center;
-            padding: 15px;
+            padding: 10px; /* Reduced padding slightly */
             border-radius: 8px;
             margin: 5px 0;
         }
@@ -252,17 +252,17 @@
 
         .spec-title {
             display: block;
-            font-size: 1.1rem;
+            font-size: 0.8rem; /* Reduced ~20% from 1.0rem */
             color: #777;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            margin-bottom: 8px;
+            margin-bottom: 4px; /* Tightened margin */
             font-weight: 600;
         }
 
         .spec-value {
             display: block;
-            font-size: 1.6rem;
+            font-size: 1.1rem; /* Reduced ~20% from 1.4rem */
             font-weight: 700;
             color: #333;
             line-height: 1.2;
