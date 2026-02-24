@@ -48,16 +48,25 @@
 
         /* --- Title Slide Specifics (Full BG Image) --- */
         .slide-title {
-            background: url('https://z-cdn-media.chatglm.cn/files/2f9ec353-76fb-4df4-b8b9-a1b5bd8c5c63.png?auth_key=1871949242-c9b5bac90dbc466490ca238990e810cc-0-7116365e2b11e3f6bd58387c8d239908') no-repeat center center;
-            background-size: cover;
             display: flex;
             justify-content: center;
             align-items: center;
             position: relative;
         }
 
+        /* Background Image specific for title */
+        .title-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+
         /* Overlay to ensure text readability */
-        .slide-title::before {
+        .slide-title::after {
             content: '';
             position: absolute;
             top: 0;
@@ -126,8 +135,9 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: linear-gradient(135deg, transparent 40%, rgba(0, 166, 81, 0.05) 50%, transparent 60%); /* Darker Green tint */
+            background: linear-gradient(135deg, transparent 40%, rgba(0, 166, 81, 0.05) 50%, transparent 60%);
             animation: rotateBg 20s linear infinite;
+            z-index: 0;
         }
 
         @keyframes rotateBg {
@@ -157,12 +167,117 @@
             object-fit: cover;
         }
 
-        .image-placeholder {
-            color: #aab;
-            font-size: 1.1rem;
-            text-align: center;
-            padding: 20px;
+        /* --- Comparison Slide Specifics --- */
+        .slide-comparison {
+            display: flex;
+            width: 100%;
+            height: 100%;
         }
+
+        .comparison-column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Distribute space between header and specs */
+            height: 100%;
+            position: relative;
+            padding: 40px;
+        }
+
+        /* Bambu Column (Left) */
+        .comp-bambu {
+            background-color: #fff;
+        }
+
+        /* Ender Column (Right) */
+        .comp-ender {
+            background-color: #f8f9fa;
+        }
+
+        /* Vertical divider line */
+        .slide-comparison::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: #e0e0e0;
+            z-index: 5;
+            transform: translateX(-50%);
+        }
+
+        .comp-header {
+            text-align: center;
+            padding: 30px 0;
+        }
+
+        .comp-logo {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin: 0;
+            position: relative;
+        }
+        
+        .comp-bambu .comp-logo { color: #00a651; }
+        .comp-ender .comp-logo { color: #555; }
+
+        /* Comparison Specs List - Now taking up available space */
+        .comp-specs {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1; /* Takes remaining vertical space */
+            justify-content: space-around; /* Evenly spaces items vertically */
+        }
+
+        .comp-spec-item {
+            text-align: center;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 5px 0;
+        }
+
+        .comp-bambu .comp-spec-item {
+            border-left: 4px solid #00a651;
+            background: rgba(0, 166, 81, 0.03);
+        }
+
+        .comp-ender .comp-spec-item {
+            border-left: 4px solid #ccc;
+            background: #fff;
+        }
+
+        .spec-title {
+            display: block;
+            font-size: 1.1rem;
+            color: #777;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .spec-value {
+            display: block;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #333;
+            line-height: 1.2;
+        }
+        
+        .spec-value.highlight {
+            color: #00a651;
+        }
+        
+        .spec-value.lowlight {
+            color: #999;
+            text-decoration: line-through;
+            font-weight: 400;
+        }
+
 
         /* Typography */
         h1 {
@@ -191,7 +306,7 @@
             left: 0;
             width: 60px;
             height: 5px;
-            background-color: #00a651; /* Darker Green */
+            background-color: #00a651;
             border-radius: 3px;
         }
 
@@ -225,7 +340,7 @@
             top: 8px;
             width: 8px;
             height: 8px;
-            background-color: #00a651; /* Darker Green */
+            background-color: #00a651;
             border-radius: 50%;
         }
 
@@ -264,7 +379,7 @@
             top: 0;
             left: 0;
             height: 4px;
-            background: linear-gradient(90deg, #00a651, #008039); /* Darker Green Gradient */
+            background: linear-gradient(90deg, #00a651, #008039);
             z-index: 200;
             transition: width 0.3s ease;
             box-shadow: 0 0 10px rgba(0, 166, 81, 0.5);
@@ -297,6 +412,7 @@
 
         <!-- Slide 1: Title -->
         <div class="slide slide-title active">
+            <img src="1_bambu.jpg" alt="Bambu Lab Background" class="title-bg">
             <div class="floating-box">
                 <h1>Why Getting a Bambu A1 is a Smart Decision</h1>
                 <p style="font-size: 1.3rem; color: #666; margin-bottom: 0;">Key reasons why this is a great investment for the future.</p>
@@ -315,9 +431,7 @@
             </div>
             <div class="content-image-side">
                 <div class="image-container slide-up delay-3">
-                    <div class="image-placeholder">
-                        [ Space for Image: Robotics parts or CAD interface ]
-                    </div>
+                    <img src="2_bambu.jpg" alt="Skills and Engineering">
                 </div>
             </div>
         </div>
@@ -334,9 +448,7 @@
             </div>
             <div class="content-image-side">
                 <div class="image-container slide-up delay-3">
-                    <div class="image-placeholder">
-                        [ Space for Image: High-quality school model vs cardboard ]
-                    </div>
+                    <img src="3_bambu.jpg" alt="School Projects">
                 </div>
             </div>
         </div>
@@ -353,9 +465,7 @@
             </div>
             <div class="content-image-side">
                 <div class="image-container slide-up delay-3">
-                    <div class="image-placeholder">
-                        [ Space for Image: Phone holder or household fixes ]
-                    </div>
+                    <img src="4_bambu.jpg" alt="Real World Prints">
                 </div>
             </div>
         </div>
@@ -372,8 +482,75 @@
             </div>
             <div class="content-image-side">
                 <div class="image-container slide-up delay-3">
-                    <div class="image-placeholder">
-                        [ Space for Image: Creative custom designs ]
+                    <img src="5_bambu.jpg" alt="Creativity">
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Comparison -->
+        <div class="slide slide-comparison">
+            <!-- Bambu Side -->
+            <div class="comparison-column comp-bambu">
+                <div class="comp-header">
+                    <div class="comp-logo slide-up delay-1">Bambu A1</div>
+                </div>
+                <div class="comp-specs">
+                    <div class="comp-spec-item slide-up delay-1">
+                        <span class="spec-title">Auto Bed Leveling</span>
+                        <span class="spec-value highlight">Yes ✓</span>
+                    </div>
+                    <div class="comp-spec-item slide-up delay-1">
+                        <span class="spec-title">Print Size</span>
+                        <span class="spec-value">256 x 256 x 256 mm</span>
+                    </div>
+                    <div class="comp-spec-item slide-up delay-1">
+                        <span class="spec-title">Max Print Speed</span>
+                        <span class="spec-value highlight">500mm/s</span>
+                    </div>
+                    <div class="comp-spec-item slide-up delay-1">
+                        <span class="spec-title">Printable Materials</span>
+                        <span class="spec-value highlight">PLA, PETG, TPU</span>
+                    </div>
+                    <div class="comp-spec-item slide-up delay-1">
+                        <span class="spec-title">Multi-color (AMS)</span>
+                        <span class="spec-value highlight">Yes ✓</span>
+                    </div>
+                    <div class="comp-spec-item slide-up delay-1">
+                        <span class="spec-title">Filament Run-out</span>
+                        <span class="spec-value highlight">Yes ✓</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Ender Side -->
+            <div class="comparison-column comp-ender">
+                <div class="comp-header">
+                    <div class="comp-logo slide-up delay-2">Ender 3</div>
+                </div>
+                <div class="comp-specs">
+                    <div class="comp-spec-item slide-up delay-2">
+                        <span class="spec-title">Auto Bed Leveling</span>
+                        <span class="spec-value lowlight">No ✗</span>
+                    </div>
+                    <div class="comp-spec-item slide-up delay-2">
+                        <span class="spec-title">Print Size</span>
+                        <span class="spec-value">220 x 220 x 250 mm</span>
+                    </div>
+                    <div class="comp-spec-item slide-up delay-2">
+                        <span class="spec-title">Max Print Speed</span>
+                        <span class="spec-value lowlight">180mm/s</span>
+                    </div>
+                    <div class="comp-spec-item slide-up delay-2">
+                        <span class="spec-title">Printable Materials</span>
+                        <span class="spec-value">PLA, PETG</span>
+                    </div>
+                    <div class="comp-spec-item slide-up delay-2">
+                        <span class="spec-title">Multi-color (AMS)</span>
+                        <span class="spec-value lowlight">No ✗</span>
+                    </div>
+                    <div class="comp-spec-item slide-up delay-2">
+                        <span class="spec-title">Filament Run-out</span>
+                        <span class="spec-value lowlight">No ✗</span>
                     </div>
                 </div>
             </div>
@@ -392,25 +569,17 @@
         const totalSlides = slides.length;
 
         function showSlide(index) {
-            // Handle boundaries
             if (index >= totalSlides) index = totalSlides - 1;
             if (index < 0) index = 0;
 
-            // Remove active class from current
             slides[currentSlide].classList.remove('active');
-            
-            // Update current index
             currentSlide = index;
-
-            // Add active class to new current
             slides[currentSlide].classList.add('active');
 
-            // Update Progress Bar
             const progressPercentage = ((currentSlide) / (totalSlides - 1)) * 100;
             progressBar.style.width = progressPercentage + '%';
         }
 
-        // Keyboard Navigation
         window.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
                 showSlide(currentSlide + 1);
@@ -419,7 +588,6 @@
             }
         });
 
-        // Initialize
         showSlide(0);
     </script>
 </body>
