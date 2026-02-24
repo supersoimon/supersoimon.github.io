@@ -15,9 +15,31 @@
             font-family: 'Inter', 'Segoe UI', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f0f2f5;
+            background-color: #121212; /* Deep Tech Black */
             overflow: hidden;
-            color: #333;
+            color: #e0e0e0;
+        }
+
+        /* Global 3D Printer Theme: Hex Grid Background */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(0, 166, 81, 0.03) 1px, transparent 1px),
+                linear-gradient(30deg, #1a1a1a 12%, transparent 12.5%, transparent 87%, #1a1a1a 87.5%, #1a1a1a),
+                linear-gradient(150deg, #1a1a1a 12%, transparent 12.5%, transparent 87%, #1a1a1a 87.5%, #1a1a1a),
+                linear-gradient(30deg, #1a1a1a 12%, transparent 12.5%, transparent 87%, #1a1a1a 87.5%, #1a1a1a),
+                linear-gradient(150deg, #1a1a1a 12%, transparent 12.5%, transparent 87%, #1a1a1a 87.5%, #1a1a1a),
+                linear-gradient(60deg, #151515 25%, transparent 25.5%, transparent 75%, #151515 75%, #151515),
+                linear-gradient(60deg, #151515 25%, transparent 25.5%, transparent 75%, #151515 75%, #151515);
+            background-size: 20px 35px;
+            background-position: 0 0, 0 0, 10px 17px, 10px 17px, 0 0, 10px 17px, 0 0;
+            z-index: -1;
+            opacity: 0.5;
         }
 
         /* Slide Container */
@@ -46,15 +68,15 @@
             z-index: 10;
         }
 
-        /* --- Title Slide Specifics (Full BG Image) --- */
+        /* --- Title Slide Specifics --- */
         .slide-title {
             display: flex;
             justify-content: center;
             align-items: center;
             position: relative;
+            background: radial-gradient(circle at center, #1e1e1e 0%, #0a0a0a 100%);
         }
 
-        /* Background Image specific for title */
         .title-bg {
             position: absolute;
             top: 0;
@@ -63,32 +85,26 @@
             height: 100%;
             object-fit: cover;
             z-index: 0;
+            opacity: 0.4; /* Dim image for tech feel */
+            filter: grayscale(40%) contrast(1.2);
         }
 
-        /* Overlay to ensure text readability */
         .slide-title::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.45); 
-            z-index: 1;
+            background: rgba(0, 0, 0, 0.7);
         }
 
-        /* Floating Content Box for Title */
         .floating-box {
             position: relative;
             z-index: 2;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+            background: rgba(23, 23, 23, 0.8);
+            backdrop-filter: blur(15px);
             padding: 60px 80px;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            border-radius: 4px; /* Tech-sharp corners */
+            box-shadow: 0 0 40px rgba(0, 166, 81, 0.15), 0 0 0 1px rgba(0, 166, 81, 0.3);
             text-align: center;
             max-width: 850px;
-            border-bottom: 6px solid #00a651; /* Darker Green Accent */
+            border-bottom: 4px solid #00d06c; /* Bright Green Accents */
+            border-top: 1px solid rgba(255,255,255,0.1);
             transform: translateY(20px);
             transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
         }
@@ -97,12 +113,12 @@
             transform: translateY(0);
         }
 
-        /* --- Content Slide Specifics (Split Layout) --- */
+        /* --- Content Slide Specifics --- */
         .slide-content {
             display: flex;
             width: 100%;
             height: 100%;
-            background: white;
+            background: transparent;
         }
 
         /* Left Side: Text */
@@ -112,14 +128,15 @@
             flex-direction: column;
             justify-content: center;
             padding: 0 7%;
-            background: #ffffff;
+            background: linear-gradient(90deg, #121212 0%, #181818 100%);
             height: 100%;
+            border-right: 1px solid rgba(255,255,255,0.05);
         }
 
         /* Right Side: Image */
         .content-image-side {
             flex: 1;
-            background-color: #f4f6f8;
+            background-color: #0f0f0f;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -127,22 +144,19 @@
             overflow: hidden;
         }
 
-        /* Subtle moving background element */
-        .content-image-side::before {
-            content: '';
+        /* Subtle grid overlay for image side */
+        .content-image-side::after {
+            content: "";
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(135deg, transparent 40%, rgba(0, 166, 81, 0.05) 50%, transparent 60%);
-            animation: rotateBg 20s linear infinite;
-            z-index: 0;
-        }
-
-        @keyframes rotateBg {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 20px 20px;
+            z-index: 1;
+            pointer-events: none;
         }
 
         /* Image Container */
@@ -151,20 +165,21 @@
             z-index: 2;
             width: 85%;
             height: 70%;
-            background: #fff;
-            border-radius: 12px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+            background: #000;
+            border-radius: 4px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.1);
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            border: 1px solid #eee;
+            border-top: 3px solid #00d06c; /* Top accent line */
         }
 
         .image-container img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            filter: brightness(1.1) contrast(1.1);
         }
 
         /* --- Comparison Slide Specifics --- */
@@ -172,6 +187,7 @@
             display: flex;
             width: 100%;
             height: 100%;
+            background: #0a0a0a;
         }
 
         .comparison-column {
@@ -184,32 +200,25 @@
             padding: 40px;
         }
 
-        /* Bambu Column (Left) */
         .comp-bambu {
-            background-color: #fff;
+            background: linear-gradient(180deg, #121212 0%, #0a0a0a 100%);
+            border-right: 1px solid #00d06c;
+            box-shadow: 5px 0 15px rgba(0, 208, 108, 0.05);
         }
 
-        /* Ender Column (Right) */
         .comp-ender {
-            background-color: #f8f9fa;
+            background: linear-gradient(180deg, #151515 0%, #0a0a0a 100%);
+            border-left: 1px solid #333;
         }
 
-        /* Vertical divider line */
         .slide-comparison::after {
-            content: '';
-            position: absolute;
-            left: 50%;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background-color: #e0e0e0;
-            z-index: 5;
-            transform: translateX(-50%);
+            display: none; /* Removed default divider for colored border */
         }
 
         .comp-header {
             text-align: center;
             padding: 30px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
         }
 
         .comp-logo {
@@ -217,12 +226,13 @@
             font-weight: 700;
             margin: 0;
             position: relative;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
         
-        .comp-bambu .comp-logo { color: #00a651; }
-        .comp-ender .comp-logo { color: #555; }
+        .comp-bambu .comp-logo { color: #00d06c; text-shadow: 0 0 20px rgba(0, 208, 108, 0.3); }
+        .comp-ender .comp-logo { color: #666; }
 
-        /* Comparison Specs List */
         .comp-specs {
             list-style: none;
             padding: 0;
@@ -235,45 +245,53 @@
 
         .comp-spec-item {
             text-align: center;
-            padding: 10px; /* Reduced padding slightly */
-            border-radius: 8px;
+            padding: 10px;
+            border-radius: 4px;
             margin: 5px 0;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .comp-spec-item:hover {
+            background: rgba(255,255,255,0.05);
         }
 
         .comp-bambu .comp-spec-item {
-            border-left: 4px solid #00a651;
-            background: rgba(0, 166, 81, 0.03);
+            border-left: 3px solid #00d06c;
+            border-color: rgba(0, 208, 108, 0.1);
         }
 
         .comp-ender .comp-spec-item {
-            border-left: 4px solid #ccc;
-            background: #fff;
+            border-left: 3px solid #444;
+            border-color: rgba(255,255,255,0.05);
         }
 
         .spec-title {
             display: block;
-            font-size: 0.8rem; /* Reduced ~20% from 1.0rem */
-            color: #777;
+            font-size: 0.8rem;
+            color: #666;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 4px; /* Tightened margin */
+            letter-spacing: 1px;
+            margin-bottom: 4px;
             font-weight: 600;
         }
 
         .spec-value {
             display: block;
-            font-size: 1.1rem; /* Reduced ~20% from 1.4rem */
+            font-size: 1.1rem;
             font-weight: 700;
-            color: #333;
+            color: #e0e0e0;
             line-height: 1.2;
         }
         
         .spec-value.highlight {
-            color: #00a651;
+            color: #00d06c;
+            text-shadow: 0 0 5px rgba(0, 208, 108, 0.2);
         }
         
         .spec-value.lowlight {
-            color: #999;
+            color: #555;
             text-decoration: line-through;
             font-weight: 400;
         }
@@ -282,39 +300,39 @@
         /* Typography */
         h1 {
             font-size: 3.2rem;
-            color: #1c1c1c;
+            color: #ffffff;
             margin-bottom: 25px;
             font-weight: 700;
             line-height: 1.2;
             letter-spacing: -0.5px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
 
         h2 {
             font-size: 2.4rem;
-            color: #1c1c1c;
+            color: #ffffff;
             margin-bottom: 35px;
             font-weight: 700;
             position: relative;
             display: inline-block;
         }
 
-        /* Underline effect for H2 */
         h2::after {
             content: '';
             position: absolute;
             bottom: -10px;
             left: 0;
             width: 60px;
-            height: 5px;
-            background-color: #00a651;
-            border-radius: 3px;
+            height: 4px;
+            background-color: #00d06c;
+            border-radius: 0; /* Sharp tech edge */
         }
 
         p {
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             line-height: 1.7;
             margin-bottom: 25px;
-            color: #555;
+            color: #bbb;
             font-weight: 400;
         }
 
@@ -328,20 +346,18 @@
         li {
             margin-bottom: 15px;
             font-size: 1.2rem;
-            color: #444;
+            color: #ccc;
             padding-left: 35px;
             position: relative;
         }
 
         li::before {
-            content: '';
+            content: '▹'; /* Tech bullet point */
+            color: #00d06c;
             position: absolute;
             left: 0;
-            top: 8px;
-            width: 8px;
-            height: 8px;
-            background-color: #00a651;
-            border-radius: 50%;
+            font-size: 1.5rem;
+            line-height: 1;
         }
 
         /* Navigation Hint */
@@ -352,25 +368,27 @@
             color: #fff;
             font-size: 0.9rem;
             z-index: 100;
-            background: rgba(0,0,0,0.6);
+            background: rgba(20, 20, 20, 0.8);
             padding: 10px 20px;
-            border-radius: 30px;
-            backdrop-filter: blur(5px);
+            border-radius: 4px;
+            backdrop-filter: blur(10px);
             font-weight: 500;
             display: flex;
             align-items: center;
             gap: 10px;
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
         .nav-hint span {
             display: inline-block;
             width: 24px;
             height: 24px;
-            border: 1px solid rgba(255,255,255,0.5);
+            border: 1px solid rgba(0, 208, 108, 0.5);
             border-radius: 50%;
             text-align: center;
             line-height: 22px;
             font-size: 0.8rem;
+            color: #00d06c;
         }
 
         /* Progress Bar */
@@ -379,10 +397,10 @@
             top: 0;
             left: 0;
             height: 4px;
-            background: linear-gradient(90deg, #00a651, #008039);
+            background: #00d06c;
             z-index: 200;
             transition: width 0.3s ease;
-            box-shadow: 0 0 10px rgba(0, 166, 81, 0.5);
+            box-shadow: 0 0 15px rgba(0, 208, 108, 0.8);
         }
 
         /* Animation classes */
@@ -397,7 +415,6 @@
             transform: translateY(0);
         }
 
-        /* Staggered animation delays */
         .delay-1 { transition-delay: 0.1s; }
         .delay-2 { transition-delay: 0.2s; }
         .delay-3 { transition-delay: 0.3s; }
@@ -415,7 +432,7 @@
             <img src="bambu.jpg" alt="Bambu Lab Background" class="title-bg">
             <div class="floating-box">
                 <h1>Why Getting a Bambu A1 is a Smart Decision</h1>
-                <p style="font-size: 1.3rem; color: #666; margin-bottom: 0;">Key reasons why this is a great investment for the future.</p>
+                <p style="font-size: 1.3rem; color: #aaa; margin-bottom: 0;">Key reasons why this is a great investment for the future.</p>
             </div>
         </div>
 
