@@ -3,7 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>The Buzzing Bee Filter Studio 🐝</title>
+    <title>The Bee Filter Studio 🐝</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_detection/face_detection.js" crossorigin="anonymous"></script>
+
     <style>
         /* --- CORE STYLES & THEME --- */
         :root {
@@ -25,7 +29,7 @@
             color: var(--cream);
             display: flex; flex-direction: column;
             align-items: center; min-height: 100vh;
-            overflow: hidden; /* Prevent body scroll, handle scroll in UI */
+            overflow: hidden;
         }
 
         h1 {
@@ -35,7 +39,6 @@
             display: flex; align-items: center; gap: 10px;
         }
         
-        /* Small vector bee for title */
         h1::before, h1::after {
             content: ''; display: inline-block; width: 24px; height: 24px;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23FFC300' d='M256 0C114.6 0 0 114.6 0 256s114.6 256 256 256 256-114.6 256-256S397.4 0 256 0zm11 384c-11.3 0-20.3-9-20.3-20.3 0-11.3 9-20.3 20.3-20.3 11.3 0 20.3 9 20.3 20.3.1 11.3-8.9 20.3-20.3 20.3zm128-128a128 128 0 0 1-128 128 128 128 0 0 1-128-128 128 128 0 0 1 128-128 128 128 0 0 1 128 128z'/%3E%3C/svg%3E");
@@ -46,7 +49,7 @@
         .viewport-container {
             position: relative;
             width: 100%; max-width: 640px;
-            height: 60vh; /* Dynamic height based on screen */
+            height: 60vh;
             background-color: #000;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0,0,0,0.7);
@@ -77,18 +80,22 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* --- STATIC VECTOR OVERLAYS (SHARED) --- */
+        /* --- AR FACE-TRACKING OVERLAYS --- */
         .vector-overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; opacity: 0; transition: opacity 0.3s ease;
-            background-repeat: no-repeat; background-position: center; background-size: contain;
+            position: absolute;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: center bottom;
         }
 
-        /* --- FILTER PICKER SCROLLER (The Scroll Wheel) --- */
+        /* --- FILTER PICKER SCROLLER --- */
         .picker-container {
             position: fixed; bottom: 0; left: 0; width: 100%;
             background: var(--ui-bg);
-            padding: 15px 0 25px; /* Extra padding for iOS home bar */
+            padding: 15px 0 25px;
             box-shadow: 0 -5px 20px rgba(0,0,0,0.5);
             z-index: 20;
             backdrop-filter: blur(10px);
@@ -100,10 +107,9 @@
             overflow-x: auto;
             scroll-snap-type: x mandatory;
             -webkit-overflow-scrolling: touch;
-            padding: 0 calc(50vw - 60px); /* Centers the active item */
+            padding: 0 calc(50vw - 60px);
         }
 
-        /* Hide scrollbar */
         .scroll-wheel::-webkit-scrollbar { display: none; }
         .scroll-wheel { -ms-overflow-style: none; scrollbar-width: none; }
 
@@ -136,7 +142,6 @@
             pointer-events: none;
         }
 
-        /* Scroll Hint Arrows */
         .scroll-hint {
             position: absolute; top: 50%; transform: translateY(-50%);
             width: 30px; height: 30px; background: rgba(255,255,255,0.1);
@@ -148,70 +153,60 @@
 
 
         /* =========================================================
-           FILTER DEFINITIONS (CSS + Vector DataURIs)
+           FILTER SPECIFICS
            ========================================================= */
 
         /* --- 1. Normal --- */
         #thumb-normal { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23999' d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z'/%3E%3C/svg%3E"); }
 
-        /* --- 2. Honey Glow (Color Grade + Honeycomb Vector Border) --- */
+        /* --- 2. Honey Glow --- */
         #thumb-honey { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='M12 2l2.4 4.9 5.3.8-3.8 3.7.9 5.3-4.8-2.5-4.8 2.5.9-5.3-3.8-3.7 5.3-.8z'/%3E%3C/svg%3E"); }
-        
         .filter-honey video { filter: scaleX(-1) sepia(0.4) saturate(2) contrast(1.1) hue-rotate(-10deg); }
         .filter-honey .overlay-honey {
             opacity: 1;
-            /* Tiled Vector Honeycomb pattern */
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100' viewBox='0 0 56 100'%3E%3Cpath d='M28 66L0 50L0 16L28 0L56 16L56 50L28 66L28 100' fill='none' stroke='%23F5A623' stroke-width='2' stroke-opacity='0.2'/%3E%3C/svg%3E");
-            background-size: 56px 100px; background-repeat: repeat;
+            background-size: 56px 100px; background-repeat: repeat; width: 100%; height: 100%; left: 0; top: 0;
         }
 
-        /* --- 3. Queen Bee (Color Grade + Vector Crown) --- */
+        /* --- 3. Queen Bee (Face Tracked Crown) --- */
         #thumb-queen { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='M5 16L3 5l5.5 3L12 3l3.5 5L21 5l-2 11H5zm14 3H5v-2h14v2z'/%3E%3C/svg%3E"); }
-        
         .filter-queen video { filter: scaleX(-1) saturate(1.5) contrast(1.2); }
         .filter-queen .overlay-queen {
             opacity: 1;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23FFC300' d='M5 16L3 5l5.5 3L12 3l3.5 5L21 5l-2 11H5zm14 3H5v-2h14v2z'/%3E%3C/svg%3E");
-            background-size: 150px; background-position: center 20px; /* Positioned on head */
             animation: float 2s infinite ease-in-out;
         }
-        @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+        @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
 
-        /* --- 4. Bee Vision (Compound Eye Vector Pattern) --- */
+        /* --- 4. Bee Vision --- */
         #thumb-vision { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z'/%3E%3C/svg%3E"); }
-        
         .filter-vision video { filter: scaleX(-1) saturate(4) contrast(1.5) sepia(0.2); }
         .filter-vision .overlay-vision {
             opacity: 0.4;
-            /* Tight hexagon pattern */
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='20' viewBox='0 0 12 20'%3E%3Cpath d='M6 13L0 10L0 3L6 0L12 3L12 10L6 13L6 20' fill='none' stroke='%23000' stroke-width='1'/%3E%3C/svg%3E");
-            background-size: 12px 20px; background-repeat: repeat;
+            background-size: 12px 20px; background-repeat: repeat; width: 100%; height: 100%; left: 0; top: 0;
         }
 
-        /* --- 5. Antennae (Vector Antennae Overlays) --- */
+        /* --- 5. Antennae (Face Tracked Antennae) --- */
         #thumb-antenna { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='M12 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm0 6c-1.1 0-2 .9-2 2v10h4V10c0-1.1-.9-2-2-2z'/%3E%3C/svg%3E"); }
-
         .filter-antenna .overlay-antenna {
             opacity: 1;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 100'%3E%3Cpath d='M50 80 Q 40 20, 20 20 Q 10 20, 10 30' stroke='%231a1a1a' stroke-width='8' fill='none'/%3E%3Ccircle cx='10' cy='30' r='10' fill='%23FFC300'/%3E%3Cpath d='M150 80 Q 160 20, 180 20 Q 190 20, 190 30' stroke='%231a1a1a' stroke-width='8' fill='none'/%3E%3Ccircle cx='190' cy='30' r='10' fill='%23FFC300'/%3E%3C/svg%3E");
-            background-size: 300px; background-position: center 10px;
         }
 
-        /* --- 6. Swarm (JS Animated Vector Bees) --- */
+        /* --- 6. Swarm --- */
         #thumb-swarm { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23fff' d='M256 0C114.6 0 0 114.6 0 256s114.6 256 256 256 256-114.6 256-256S397.4 0 256 0zm11 384c-11.3 0-20.3-9-20.3-20.3 0-11.3 9-20.3 20.3-20.3 11.3 0 20.3 9 20.3 20.3.1 11.3-8.9 20.3-20.3 20.3zm128-128a128 128 0 0 1-128 128 128 128 0 0 1-128-128 128 128 0 0 1 128-128 128 128 0 0 1 128 128z'/%3E%3C/svg%3E"); }
-
         .swarm-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden; }
         .buzz-bee {
             position: absolute; width: 30px; height: 30px;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23FFC300' d='M256 0C114.6 0 0 114.6 0 256s114.6 256 256 256 256-114.6 256-256S397.4 0 256 0zm11 384c-11.3 0-20.3-9-20.3-20.3 0-11.3 9-20.3 20.3-20.3 11.3 0 20.3 9 20.3 20.3.1 11.3-8.9 20.3-20.3 20.3zm128-128a128 128 0 0 1-128 128 128 128 0 0 1-128-128 128 128 0 0 1 128-128 128 128 0 0 1 128 128z'/%3E%3C/svg%3E");
             background-size: contain; background-repeat: no-repeat;
-            transition: all 0.1s linear; /* Smooth micro-movements */
+            transition: all 0.2s ease-out;
             opacity: 0.8;
         }
 
-        /* --- 7. Pollen (JS Animated Vector Particles) --- */
+        /* --- 7. Pollen --- */
         #thumb-pollen { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle fill='%23fff' cx='5' cy='5' r='3'/%3E%3Ccircle fill='%23fff' cx='18' cy='7' r='2'/%3E%3Ccircle fill='%23fff' cx='10' cy='19' r='4'/%3E%3C/svg%3E"); }
-
         .filter-pollen video { filter: scaleX(-1) blur(1px) saturate(0.8); }
         .pollen-ball {
             position: absolute; border-radius: 50%;
@@ -227,12 +222,11 @@
             100% { transform: translateY(100vh) translateX(20px); opacity: 0; }
         }
 
-        /* --- 8. Stripes (CSS Overlay) --- */
+        /* --- 8. Stripes --- */
         #thumb-stripes { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Crect width='100' height='50' fill='%231a1a1a'/%3E%3Crect y='50' width='100' height='50' fill='%23FFC300'/%3E%3C/svg%3E"); }
-
         .filter-stripes video { filter: scaleX(-1) grayscale(1); }
         .overlay-stripes {
-            opacity: 0.3;
+            opacity: 0.3; width: 100%; height: 100%; left: 0; top: 0;
             background: repeating-linear-gradient(
                 45deg,
                 var(--bee-yellow),
@@ -311,19 +305,22 @@
         const errorMsg = document.getElementById('errorMsg');
         const errorText = document.getElementById('errorText');
 
-        // Animation intervals
         let swarmInterval = null;
         let activeBees = [];
+        
+        // Face Tracking Global States
+        let faceDetection;
+        let lastVideoTime = -1;
+        let mappedFaceBox = null; 
 
-        // --- CAMERA LOGIC (GitHub Pages Optimized) ---
+        // --- CAMERA LOGIC ---
         async function initCamera() {
             loadingMsg.style.display = 'flex';
             errorMsg.style.display = 'none';
 
-            // Flexible constraints for mobile/desktop compatibility
             const constraints = { 
                 video: { 
-                    facingMode: "user", // Prefer front camera
+                    facingMode: "user", 
                     width: { ideal: 1280 },
                     height: { ideal: 720 }
                 }, 
@@ -333,10 +330,10 @@
             try {
                 const stream = await navigator.mediaDevices.getUserMedia(constraints);
                 video.srcObject = stream;
-                // Handle older browsers that might not return a promise on play()
                 video.onloadedmetadata = () => {
-                    loadingMsg.style.display = 'none';
                     video.play();
+                    // Load and setup tracking directly after camera wakes up
+                    setupFaceTracking();
                 };
             } catch (err) {
                 loadingMsg.style.display = 'none';
@@ -345,29 +342,112 @@
                 if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
                     errorText.innerText = "Permission denied by browser.";
                 } else {
-                    errorText.innerText = " Could not access camera.";
+                    errorText.innerText = "Could not access camera.";
                 }
             }
         }
 
+        // --- FACE TRACKING SETUP (MediaPipe) ---
+        function setupFaceTracking() {
+            faceDetection = new FaceDetection({
+                locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/face_detection/${file}`
+            });
+
+            faceDetection.setOptions({
+                model: 'short',
+                minDetectionConfidence: 0.6
+            });
+
+            faceDetection.onResults(onFaceDetected);
+
+            // Trigger the runtime loop processing
+            requestAnimationFrame(processingLoop);
+        }
+
+        async function processingLoop() {
+            if (video.paused || video.ended) return;
+            
+            if (video.currentTime !== lastVideoTime) {
+                lastVideoTime = video.currentTime;
+                await faceDetection.send({ image: video });
+            }
+            requestAnimationFrame(processingLoop);
+        }
+
+        function onFaceDetected(results) {
+            // Hide loading indicator on first data loop arrival
+            if (loadingMsg.style.display !== 'none') {
+                loadingMsg.style.display = 'none';
+            }
+
+            if (!results.detections || results.detections.length === 0) {
+                mappedFaceBox = null;
+                return;
+            }
+
+            const detection = results.detections[0];
+            const box = detection.boundingBox;
+
+            // Compute scaling offset factors safely to match standard object-fit: cover architecture
+            const videoRatio = video.videoWidth / video.videoHeight;
+            const containerRatio = viewport.clientWidth / viewport.clientHeight;
+            let scaleX = 1, scaleY = 1, offsetX = 0, offsetY = 0;
+
+            if (videoRatio > containerRatio) {
+                const visibleWidth = viewport.clientHeight * videoRatio;
+                scaleX = visibleWidth / viewport.clientWidth;
+                offsetX = (viewport.clientWidth - visibleWidth) / 2 / viewport.clientWidth;
+            } else {
+                const visibleHeight = viewport.clientWidth / videoRatio;
+                scaleY = visibleHeight / viewport.clientHeight;
+                offsetY = (viewport.clientHeight - visibleHeight) / 2 / viewport.clientHeight;
+            }
+
+            // Map absolute relative percentages inside the Viewport HTML Frame bounding block
+            let x = box.xMin * scaleX + offsetX;
+            let y = box.yMin * scaleY + offsetY;
+            let w = box.width * scaleX;
+            let h = box.height * scaleY;
+
+            // Mirror correction implementation (matches video scaleX(-1))
+            const leftPercent = (1 - (x + w)) * 100;
+            const topPercent = y * 100;
+            const widthPercent = w * 100;
+            const heightPercent = h * 100;
+
+            // Globalize properties to sync system dependencies like the Swarm
+            mappedFaceBox = { left: leftPercent, top: topPercent, width: widthPercent, height: heightPercent };
+
+            // Dynamic Asset Realignment Updates
+            // 1. Queen Bee Crown Positioning
+            const queenOverlay = document.querySelector('.overlay-queen');
+            queenOverlay.style.left = `${leftPercent}%`;
+            queenOverlay.style.top = `${topPercent - (heightPercent * 0.45)}%`; // Placed clean directly above brow
+            queenOverlay.style.width = `${widthPercent}%`;
+            queenOverlay.style.height = `${heightPercent}%`;
+
+            // 2. Antennae Realignment Positioning
+            const antennaOverlay = document.querySelector('.overlay-antenna');
+            antennaOverlay.style.left = `${leftPercent - (widthPercent * 0.1)}%`; // Scaled slightly wider out
+            antennaOverlay.style.top = `${topPercent - (heightPercent * 0.65)}%`;  // Elevated safely higher
+            antennaOverlay.style.width = `${widthPercent * 1.2}%`;
+            antennaOverlay.style.height = `${heightPercent}%`;
+        }
+
         // --- FILTER SWITCHING LOGIC ---
         function setFilter(filterName, thumbElement) {
-            // 1. Update UI (Active state in scroll wheel)
             document.querySelectorAll('.picker-item').forEach(item => item.classList.remove('active'));
             thumbElement.classList.add('active');
 
-            // 2. Clear previous visual states
-            viewport.className = 'viewport-container'; // Reset classes
-            dynamicContainer.innerHTML = ''; // Clear animated particles
-            clearInterval(swarmInterval); // Stop bee loops
+            viewport.className = 'viewport-container'; 
+            dynamicContainer.innerHTML = ''; 
+            clearInterval(swarmInterval); 
             activeBees = [];
 
-            // 3. Apply new filter class to viewport
             if (filterName !== 'normal') {
                 viewport.classList.add(`filter-${filterName}`);
             }
 
-            // 4. Handle Specific JS Animations
             if (filterName === 'swarm') {
                 startSwarm();
             } else if (filterName === 'pollen') {
@@ -375,59 +455,63 @@
             }
         }
 
-        // --- DYNAMIC ANIMATION: SWARM (Vector Bees) ---
+        // --- DYNAMIC ANIMATION: SWARM (Face-Aware Tracking) ---
         function startSwarm() {
-            // Create 15 vector bees
+            // Instantiate 15 swarm particles
             for(let i=0; i<15; i++) {
                 const bee = document.createElement('div');
                 bee.className = 'buzz-bee';
-                // Random start position
                 bee.style.left = Math.random() * 90 + 5 + '%';
                 bee.style.top = Math.random() * 90 + 5 + '%';
                 dynamicContainer.appendChild(bee);
                 activeBees.push(bee);
             }
 
-            // Start buzzing loop (chaotic movement)
             swarmInterval = setInterval(() => {
                 activeBees.forEach(bee => {
-                    // Current pos
                     let curLeft = parseFloat(bee.style.left);
                     let curTop = parseFloat(bee.style.top);
 
-                    // Random small change
-                    let moveX = (Math.random() - 0.5) * 15; // Max 7.5% move
-                    let moveY = (Math.random() - 0.5) * 15;
+                    let targetLeft = Math.random() * 90 + 5;
+                    let targetTop = Math.random() * 90 + 5;
 
-                    // New pos bounded within container
-                    let newLeft = Math.max(2, Math.min(92, curLeft + moveX));
-                    let newTop = Math.max(2, Math.min(92, curTop + moveY));
+                    // If a face is tracked, shift the target attraction vector to swarm near it
+                    if (mappedFaceBox) {
+                        const faceCenterX = mappedFaceBox.left + (mappedFaceBox.width / 2);
+                        const faceCenterY = mappedFaceBox.top + (mappedFaceBox.height / 2);
+                        
+                        targetLeft = faceCenterX + (Math.random() - 0.5) * 50; 
+                        targetTop = faceCenterY + (Math.random() - 0.5) * 50;
+                    }
 
-                    // Direction flip
-                    let scale = moveX > 0 ? 'scaleX(1)' : 'scaleX(-1)';
+                    // Smooth interpolation tracking calculation
+                    let stepX = (targetLeft - curLeft) * 0.25;
+                    let stepY = (targetTop - curTop) * 0.25;
+
+                    let newLeft = Math.max(2, Math.min(92, curLeft + stepX + (Math.random() - 0.5) * 8));
+                    let newTop = Math.max(2, Math.min(92, curTop + stepY + (Math.random() - 0.5) * 8));
+                    let scale = stepX > 0 ? 'scaleX(1)' : 'scaleX(-1)';
 
                     bee.style.left = newLeft + '%';
                     bee.style.top = newTop + '%';
                     bee.style.transform = scale;
                 });
-            }, 150); // Fast update for chaotic 'buzz'
+            }, 120);
         }
 
-        // --- DYNAMIC ANIMATION: POLLEN (CSS Particles) ---
+        // --- DYNAMIC ANIMATION: POLLEN ---
         function startPollen() {
-            // Create 30 pollen balls with varied CSS animations
             for(let i=0; i<30; i++) {
                 const pollen = document.createElement('div');
                 pollen.className = 'pollen-ball';
                 
-                // Randomize look and animation timing
-                let size = Math.random() * 8 + 4 + 'px'; // 4 to 12px
+                let size = Math.random() * 8 + 4 + 'px';
                 pollen.style.width = size;
                 pollen.style.height = size;
                 pollen.style.left = Math.random() * 100 + '%';
                 
-                let duration = Math.random() * 3 + 2 + 's'; // 2 to 5s fall
-                let delay = Math.random() * 5 + 's'; // random start times
+                let duration = Math.random() * 3 + 2 + 's'; 
+                let delay = Math.random() * 5 + 's'; 
                 pollen.style.animationDuration = duration;
                 pollen.style.animationDelay = delay;
 
@@ -435,8 +519,7 @@
             }
         }
 
-        // --- SCROLL WHEEL CENTER LOGIC (Desktop) ---
-        // Makes clicking a thumb center it in the scroll view
+        // --- SCROLL WHEEL CENTER LOGIC ---
         const wheel = document.getElementById('scrollWheel');
         wheel.addEventListener('click', (e) => {
             const item = e.target.closest('.picker-item');
@@ -448,7 +531,6 @@
             }
         });
 
-        // Start camera on load
         window.addEventListener('DOMContentLoaded', initCamera);
     </script>
 </body>
