@@ -2,305 +2,453 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Buzz! 🐝</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>The Buzzing Bee Filter Studio 🐝</title>
     <style>
+        /* --- CORE STYLES & THEME --- */
         :root {
-            --bee-yellow: #FFCC00;
-            --bee-black: #222222;
-            --honey-gold: #FDB813;
+            --bee-yellow: #FFC300;
+            --bee-black: #1a1a1a;
+            --honey: #F5A623;
+            --cream: #FFFDEB;
+            --ui-bg: rgba(26, 26, 26, 0.9);
         }
 
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
         body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: radial-gradient(circle, var(--bee-yellow) 10%, var(--bee-black) 90%);
-            color: #fff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            overflow: hidden;
+            margin: 0; padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bee-black);
+            background-image: radial-gradient(#2a2a2a 1px, transparent 1px);
+            background-size: 20px 20px;
+            color: var(--cream);
+            display: flex; flex-direction: column;
+            align-items: center; min-height: 100vh;
+            overflow: hidden; /* Prevent body scroll, handle scroll in UI */
         }
 
         h1 {
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
-            margin-bottom: 10px;
-            font-size: 2.5rem;
-            text-align: center;
+            font-size: 1.5rem; margin: 15px 0 10px; text-transform: uppercase;
+            letter-spacing: 2px; color: var(--bee-yellow);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            display: flex; align-items: center; gap: 10px;
+        }
+        
+        /* Small vector bee for title */
+        h1::before, h1::after {
+            content: ''; display: inline-block; width: 24px; height: 24px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23FFC300' d='M256 0C114.6 0 0 114.6 0 256s114.6 256 256 256 256-114.6 256-256S397.4 0 256 0zm11 384c-11.3 0-20.3-9-20.3-20.3 0-11.3 9-20.3 20.3-20.3 11.3 0 20.3 9 20.3 20.3.1 11.3-8.9 20.3-20.3 20.3zm128-128a128 128 0 0 1-128 128 128 128 0 0 1-128-128 128 128 0 0 1 128-128 128 128 0 0 1 128 128z'/%3E%3C/svg%3E");
+            background-size: contain; background-repeat: no-repeat;
         }
 
-        h1 span {
-            display: inline-block;
-            animation: bounce 0.6s infinite alternate;
-        }
-
-        @keyframes bounce {
-            from { transform: translateY(0); }
-            to { transform: translateY(-10px); }
-        }
-
-        .camera-container {
+        /* --- CAMERA VIEWPORT --- */
+        .viewport-container {
             position: relative;
-            width: 640px;
-            height: 480px;
-            max-width: 90vw;
-            max-height: 70vh;
-            border: 8px solid var(--bee-black);
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            width: 100%; max-width: 640px;
+            height: 60vh; /* Dynamic height based on screen */
             background-color: #000;
             overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+            border-bottom: 4px solid var(--bee-yellow);
         }
 
         video {
-            width: 100%;
-            height: 100%;
+            width: 100%; height: 100%;
             object-fit: cover;
-            transform: scaleX(-1);
+            transform: scaleX(-1); /* Mirror view */
             transition: filter 0.3s ease;
         }
 
-        /* --- FILTERS LAYERS --- */
-        .filter-honey video {
-            filter: scaleX(-1) sepia(0.5) saturate(2.5) contrast(1.1) hue-rotate(-10deg);
+        /* --- UI ERROR/LOADING OVERLAYS --- */
+        .overlay-msg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bee-black);
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            padding: 30px; text-align: center; z-index: 10;
+        }
+        #errorMsg { display: none; color: #ff6b6b; border: 2px solid #ff6b6b; }
+        .spinner {
+            border: 4px solid rgba(255,255,255,0.1);
+            border-left-color: var(--bee-yellow);
+            border-radius: 50%; width: 40px; height: 40px;
+            animation: spin 1s linear infinite; margin-bottom: 15px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* --- STATIC VECTOR OVERLAYS (SHARED) --- */
+        .vector-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; opacity: 0; transition: opacity 0.3s ease;
+            background-repeat: no-repeat; background-position: center; background-size: contain;
         }
 
-        .filter-vision video {
-            filter: scaleX(-1) saturate(3) contrast(1.3) sepia(0.2);
-        }
-        .hex-overlay {
-            display: none;
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none;
-            opacity: 0.25;
-            background-color: #ffcc00;
-            background-image: 
-                radial-gradient(circle at 50% 50%, transparent 45%, #000 45%, #000 55%, transparent 55%),
-                radial-gradient(circle at 0 0, transparent 45%, #000 45%, #000 55%, transparent 55%),
-                radial-gradient(circle at 100% 0, transparent 45%, #000 45%, #000 55%, transparent 55%),
-                radial-gradient(circle at 0 100%, transparent 45%, #000 45%, #000 55%, transparent 55%),
-                radial-gradient(circle at 100% 100%, transparent 45%, #000 45%, #000 55%, transparent 55%);
-            background-size: 30px 52px;
-        }
-        .filter-vision .hex-overlay { display: block; }
-
-        .queen-overlay {
-            display: none;
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none;
-            box-sizing: border-box;
-            border: 15px solid transparent;
-            border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30'%3E%3Ctext y='20' font-size='20'%3E🌻%3C/text%3E%3C/svg%3E") 30 round;
-        }
-        .queen-crown {
-            display: none;
-            position: absolute;
-            top: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 4rem;
-            animation: float 2s infinite ease-in-out;
-        }
-        .filter-queen .queen-overlay, .filter-queen .queen-crown { display: block; }
-
-        @keyframes float {
-            0%, 100% { transform: translateX(-50%) translateY(0) rotate(0deg); }
-            50% { transform: translateX(-50%) translateY(-10px) rotate(3deg); }
+        /* --- FILTER PICKER SCROLLER (The Scroll Wheel) --- */
+        .picker-container {
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            background: var(--ui-bg);
+            padding: 15px 0 25px; /* Extra padding for iOS home bar */
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.5);
+            z-index: 20;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
 
-        .swarm-container {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none;
-            overflow: hidden;
-        }
-        .buzzing-bee {
-            position: absolute;
-            font-size: 2rem;
-            transition: all 0.5s linear;
-        }
-
-        .controls {
-            margin-top: 25px;
+        .scroll-wheel {
             display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            justify-content: center;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            padding: 0 calc(50vw - 60px); /* Centers the active item */
         }
 
-        button {
-            background-color: var(--bee-black);
-            color: var(--bee-yellow);
-            border: 3px solid var(--bee-yellow);
-            padding: 12px 24px;
-            font-size: 1rem;
-            font-weight: bold;
-            border-radius: 50px;
+        /* Hide scrollbar */
+        .scroll-wheel::-webkit-scrollbar { display: none; }
+        .scroll-wheel { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .picker-item {
+            flex: 0 0 100px; height: 100px;
+            margin: 0 10px;
+            scroll-snap-align: center;
+            border-radius: 50%;
+            border: 4px solid #444;
+            background-color: #2a2a2a;
+            background-size: 60%; background-repeat: no-repeat; background-position: center;
             cursor: pointer;
             transition: all 0.2s ease;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            position: relative;
+            display: flex; justify-content: center; align-items: flex-end;
+            padding-bottom: 10px;
         }
 
-        button:hover {
-            background-color: var(--bee-yellow);
-            color: var(--bee-black);
-            transform: scale(1.05);
+        .picker-item.active {
+            border-color: var(--bee-yellow);
+            background-color: var(--honey);
+            transform: scale(1.15);
+            box-shadow: 0 0 15px var(--honey);
         }
 
-        button.active {
-            background-color: #fff;
-            color: var(--bee-black);
-            border-color: #fff;
-            box-shadow: 0 0 15px #fff;
+        .picker-item span {
+            font-size: 0.7rem; font-weight: bold; text-transform: uppercase;
+            color: #fff; background: rgba(0,0,0,0.7);
+            padding: 2px 6px; border-radius: 4px;
+            pointer-events: none;
         }
 
-        .error-msg {
-            color: #ff4444;
-            background: rgba(0,0,0,0.9);
-            padding: 20px;
-            border-radius: 15px;
-            border: 2px solid #ff4444;
-            display: none;
-            text-align: center;
-            max-width: 500px;
-            margin-top: 20px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        /* Scroll Hint Arrows */
+        .scroll-hint {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            width: 30px; height: 30px; background: rgba(255,255,255,0.1);
+            border-radius: 50%; display: flex; justify-content: center; align-items: center;
+            color: var(--cream); font-size: 1.2rem; pointer-events: none; opacity: 0.7;
         }
+        .hint-left { left: 10px; }
+        .hint-right { right: 10px; }
+
+
+        /* =========================================================
+           FILTER DEFINITIONS (CSS + Vector DataURIs)
+           ========================================================= */
+
+        /* --- 1. Normal --- */
+        #thumb-normal { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23999' d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z'/%3E%3C/svg%3E"); }
+
+        /* --- 2. Honey Glow (Color Grade + Honeycomb Vector Border) --- */
+        #thumb-honey { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='M12 2l2.4 4.9 5.3.8-3.8 3.7.9 5.3-4.8-2.5-4.8 2.5.9-5.3-3.8-3.7 5.3-.8z'/%3E%3C/svg%3E"); }
+        
+        .filter-honey video { filter: scaleX(-1) sepia(0.4) saturate(2) contrast(1.1) hue-rotate(-10deg); }
+        .filter-honey .overlay-honey {
+            opacity: 1;
+            /* Tiled Vector Honeycomb pattern */
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100' viewBox='0 0 56 100'%3E%3Cpath d='M28 66L0 50L0 16L28 0L56 16L56 50L28 66L28 100' fill='none' stroke='%23F5A623' stroke-width='2' stroke-opacity='0.2'/%3E%3C/svg%3E");
+            background-size: 56px 100px; background-repeat: repeat;
+        }
+
+        /* --- 3. Queen Bee (Color Grade + Vector Crown) --- */
+        #thumb-queen { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='M5 16L3 5l5.5 3L12 3l3.5 5L21 5l-2 11H5zm14 3H5v-2h14v2z'/%3E%3C/svg%3E"); }
+        
+        .filter-queen video { filter: scaleX(-1) saturate(1.5) contrast(1.2); }
+        .filter-queen .overlay-queen {
+            opacity: 1;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23FFC300' d='M5 16L3 5l5.5 3L12 3l3.5 5L21 5l-2 11H5zm14 3H5v-2h14v2z'/%3E%3C/svg%3E");
+            background-size: 150px; background-position: center 20px; /* Positioned on head */
+            animation: float 2s infinite ease-in-out;
+        }
+        @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+
+        /* --- 4. Bee Vision (Compound Eye Vector Pattern) --- */
+        #thumb-vision { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z'/%3E%3C/svg%3E"); }
+        
+        .filter-vision video { filter: scaleX(-1) saturate(4) contrast(1.5) sepia(0.2); }
+        .filter-vision .overlay-vision {
+            opacity: 0.4;
+            /* Tight hexagon pattern */
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='20' viewBox='0 0 12 20'%3E%3Cpath d='M6 13L0 10L0 3L6 0L12 3L12 10L6 13L6 20' fill='none' stroke='%23000' stroke-width='1'/%3E%3C/svg%3E");
+            background-size: 12px 20px; background-repeat: repeat;
+        }
+
+        /* --- 5. Antennae (Vector Antennae Overlays) --- */
+        #thumb-antenna { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='M12 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm0 6c-1.1 0-2 .9-2 2v10h4V10c0-1.1-.9-2-2-2z'/%3E%3C/svg%3E"); }
+
+        .filter-antenna .overlay-antenna {
+            opacity: 1;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 100'%3E%3Cpath d='M50 80 Q 40 20, 20 20 Q 10 20, 10 30' stroke='%231a1a1a' stroke-width='8' fill='none'/%3E%3Ccircle cx='10' cy='30' r='10' fill='%23FFC300'/%3E%3Cpath d='M150 80 Q 160 20, 180 20 Q 190 20, 190 30' stroke='%231a1a1a' stroke-width='8' fill='none'/%3E%3Ccircle cx='190' cy='30' r='10' fill='%23FFC300'/%3E%3C/svg%3E");
+            background-size: 300px; background-position: center 10px;
+        }
+
+        /* --- 6. Swarm (JS Animated Vector Bees) --- */
+        #thumb-swarm { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23fff' d='M256 0C114.6 0 0 114.6 0 256s114.6 256 256 256 256-114.6 256-256S397.4 0 256 0zm11 384c-11.3 0-20.3-9-20.3-20.3 0-11.3 9-20.3 20.3-20.3 11.3 0 20.3 9 20.3 20.3.1 11.3-8.9 20.3-20.3 20.3zm128-128a128 128 0 0 1-128 128 128 128 0 0 1-128-128 128 128 0 0 1 128-128 128 128 0 0 1 128 128z'/%3E%3C/svg%3E"); }
+
+        .swarm-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden; }
+        .buzz-bee {
+            position: absolute; width: 30px; height: 30px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23FFC300' d='M256 0C114.6 0 0 114.6 0 256s114.6 256 256 256 256-114.6 256-256S397.4 0 256 0zm11 384c-11.3 0-20.3-9-20.3-20.3 0-11.3 9-20.3 20.3-20.3 11.3 0 20.3 9 20.3 20.3.1 11.3-8.9 20.3-20.3 20.3zm128-128a128 128 0 0 1-128 128 128 128 0 0 1-128-128 128 128 0 0 1 128-128 128 128 0 0 1 128 128z'/%3E%3C/svg%3E");
+            background-size: contain; background-repeat: no-repeat;
+            transition: all 0.1s linear; /* Smooth micro-movements */
+            opacity: 0.8;
+        }
+
+        /* --- 7. Pollen (JS Animated Vector Particles) --- */
+        #thumb-pollen { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle fill='%23fff' cx='5' cy='5' r='3'/%3E%3Ccircle fill='%23fff' cx='18' cy='7' r='2'/%3E%3Ccircle fill='%23fff' cx='10' cy='19' r='4'/%3E%3C/svg%3E"); }
+
+        .filter-pollen video { filter: scaleX(-1) blur(1px) saturate(0.8); }
+        .pollen-ball {
+            position: absolute; border-radius: 50%;
+            background: var(--bee-yellow);
+            box-shadow: 0 0 10px var(--bee-yellow);
+            pointer-events: none; opacity: 0;
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            0% { transform: translateY(-50px) translateX(0); opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(100vh) translateX(20px); opacity: 0; }
+        }
+
+        /* --- 8. Stripes (CSS Overlay) --- */
+        #thumb-stripes { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Crect width='100' height='50' fill='%231a1a1a'/%3E%3Crect y='50' width='100' height='50' fill='%23FFC300'/%3E%3C/svg%3E"); }
+
+        .filter-stripes video { filter: scaleX(-1) grayscale(1); }
+        .overlay-stripes {
+            opacity: 0.3;
+            background: repeating-linear-gradient(
+                45deg,
+                var(--bee-yellow),
+                var(--bee-yellow) 20px,
+                var(--bee-black) 20px,
+                var(--bee-black) 40px
+            );
+        }
+
     </style>
 </head>
 <body>
 
-    <h1>
-        <span>🐝</span> Bee Cam <span>🐝</span>
-    </h1>
+    <h1>BEESTUDIO</h1>
 
-    <div class="camera-container" id="camContainer">
+    <div class="viewport-container" id="viewport">
         <video id="video" autoplay playsinline muted></video>
-        <div class="hex-overlay"></div>
-        <div class="queen-overlay"></div>
-        <div class="queen-crown">👑</div>
-        <div class="swarm-container" id="swarmContainer"></div>
+        
+        <div class="overlay-msg" id="loadingMsg">
+            <div class="spinner"></div>
+            <p>Waking up the bees...</p>
+        </div>
+
+        <div class="overlay-msg" id="errorMsg">
+            <h3>Bzzzt! Camera Blocked</h3>
+            <p id="errorText">Permission denied.</p>
+            <p style="font-size:0.8rem; opacity:0.7;">Tap the 🔒 icon in address bar, Allow Camera, then refresh.</p>
+        </div>
+
+        <div class="vector-overlay overlay-honey"></div>
+        <div class="vector-overlay overlay-queen"></div>
+        <div class="vector-overlay overlay-vision"></div>
+        <div class="vector-overlay overlay-antenna"></div>
+        <div class="vector-overlay overlay-stripes"></div>
+
+        <div class="swarm-container" id="dynamicContainer"></div>
     </div>
 
-    <div class="error-msg" id="errorMsg">
-        <h3>Oops! Camera Blocked 🛑</h3>
-        <p id="errorText">An unknown error occurred while trying to access the camera.</p>
-        <p style="font-size: 0.9rem; color: #aaa;">Tip: Click the 🔒 lock icon next to your browser URL bar and change Camera to "Allow", then refresh!</p>
-    </div>
-
-    <div class="controls">
-        <button onclick="setFilter('normal', this)" class="active">Normal Cam</button>
-        <button onclick="setFilter('honey', this)">🍯 Honey Glow</button>
-        <button onclick="setFilter('vision', this)">👁️ Bee Vision</button>
-        <button onclick="setFilter('queen', this)">👑 Queen Bee</button>
-        <button onclick="setFilter('swarm', this)">🐝 Bee Swarm!</button>
+    <div class="picker-container">
+        <div class="scroll-hint hint-left">‹</div>
+        <div class="scroll-hint hint-right">›</div>
+        
+        <div class="scroll-wheel" id="scrollWheel">
+            <div class="picker-item active" id="thumb-normal" onclick="setFilter('normal', this)">
+                <span>Normal</span>
+            </div>
+            <div class="picker-item" id="thumb-honey" onclick="setFilter('honey', this)">
+                <span>Honey</span>
+            </div>
+            <div class="picker-item" id="thumb-queen" onclick="setFilter('queen', this)">
+                <span>Queen</span>
+            </div>
+            <div class="picker-item" id="thumb-vision" onclick="setFilter('vision', this)">
+                <span>Vision</span>
+            </div>
+            <div class="picker-item" id="thumb-antenna" onclick="setFilter('antenna', this)">
+                <span>Antennae</span>
+            </div>
+            <div class="picker-item" id="thumb-swarm" onclick="setFilter('swarm', this)">
+                <span>Swarm</span>
+            </div>
+            <div class="picker-item" id="thumb-pollen" onclick="setFilter('pollen', this)">
+                <span>Pollen</span>
+            </div>
+            <div class="picker-item" id="thumb-stripes" onclick="setFilter('stripes', this)">
+                <span>Stripes</span>
+            </div>
+        </div>
     </div>
 
     <script>
         const video = document.getElementById('video');
-        const container = document.getElementById('camContainer');
-        const swarmContainer = document.getElementById('swarmContainer');
+        const viewport = document.getElementById('viewport');
+        const dynamicContainer = document.getElementById('dynamicContainer');
+        const loadingMsg = document.getElementById('loadingMsg');
         const errorMsg = document.getElementById('errorMsg');
         const errorText = document.getElementById('errorText');
+
+        // Animation intervals
         let swarmInterval = null;
-        let beesArray = [];
+        let activeBees = [];
 
+        // --- CAMERA LOGIC (GitHub Pages Optimized) ---
         async function initCamera() {
-            // Sequential fallback options for maximum device compatibility
-            const options = [
-                { video: { width: { ideal: 640 }, height: { ideal: 480 } }, audio: false },
-                { video: { facingMode: "user" }, audio: false },
-                { video: true, audio: false }
-            ];
+            loadingMsg.style.display = 'flex';
+            errorMsg.style.display = 'none';
 
-            let lastError = null;
+            // Flexible constraints for mobile/desktop compatibility
+            const constraints = { 
+                video: { 
+                    facingMode: "user", // Prefer front camera
+                    width: { ideal: 1280 },
+                    height: { ideal: 720 }
+                }, 
+                audio: false 
+            };
 
-            for (let constraints of options) {
-                try {
-                    const stream = await navigator.mediaDevices.getUserMedia(constraints);
-                    video.srcObject = stream;
-                    errorMsg.style.display = 'none'; 
-                    return; // Success! Exit the function.
-                } catch (err) {
-                    lastError = err;
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia(constraints);
+                video.srcObject = stream;
+                // Handle older browsers that might not return a promise on play()
+                video.onloadedmetadata = () => {
+                    loadingMsg.style.display = 'none';
+                    video.play();
+                };
+            } catch (err) {
+                loadingMsg.style.display = 'none';
+                errorMsg.style.display = 'flex';
+                console.error("Camera Error: ", err);
+                if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
+                    errorText.innerText = "Permission denied by browser.";
+                } else {
+                    errorText.innerText = " Could not access camera.";
                 }
             }
-
-            // If we get here, all camera configurations failed
-            handleCameraError(lastError);
         }
 
-        function handleCameraError(err) {
-            errorMsg.style.display = 'block';
-            console.error("Detailed Camera Error:", err);
+        // --- FILTER SWITCHING LOGIC ---
+        function setFilter(filterName, thumbElement) {
+            // 1. Update UI (Active state in scroll wheel)
+            document.querySelectorAll('.picker-item').forEach(item => item.classList.remove('active'));
+            thumbElement.classList.add('active');
 
-            if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
-                errorText.innerHTML = "<strong>Permission Denied:</strong> Your browser or device is blocking camera access for this site.";
-            } else if (err.name === 'NotFoundError' || err.name === 'DevicesNotFoundError') {
-                errorText.innerHTML = "<strong>No Camera Found:</strong> We couldn't detect a working webcam connected to this device.";
-            } else {
-                errorText.innerHTML = `<strong>Error:</strong> ${err.message || 'Could not initialize camera stream.'} (${err.name})`;
-            }
-        }
+            // 2. Clear previous visual states
+            viewport.className = 'viewport-container'; // Reset classes
+            dynamicContainer.innerHTML = ''; // Clear animated particles
+            clearInterval(swarmInterval); // Stop bee loops
+            activeBees = [];
 
-        function setFilter(filterName, buttonElement) {
-            document.querySelectorAll('.controls button').forEach(btn => btn.classList.remove('active'));
-            buttonElement.classList.add('active');
-            container.className = 'camera-container';
-            
-            clearInterval(swarmInterval);
-            swarmContainer.innerHTML = '';
-            beesArray = [];
-
+            // 3. Apply new filter class to viewport
             if (filterName !== 'normal') {
-                container.classList.add(`filter-${filterName}`);
+                viewport.classList.add(`filter-${filterName}`);
             }
 
+            // 4. Handle Specific JS Animations
             if (filterName === 'swarm') {
                 startSwarm();
+            } else if (filterName === 'pollen') {
+                startPollen();
             }
         }
 
+        // --- DYNAMIC ANIMATION: SWARM (Vector Bees) ---
         function startSwarm() {
-            for(let i = 0; i < 15; i++) {
-                createBee();
+            // Create 15 vector bees
+            for(let i=0; i<15; i++) {
+                const bee = document.createElement('div');
+                bee.className = 'buzz-bee';
+                // Random start position
+                bee.style.left = Math.random() * 90 + 5 + '%';
+                bee.style.top = Math.random() * 90 + 5 + '%';
+                dynamicContainer.appendChild(bee);
+                activeBees.push(bee);
             }
+
+            // Start buzzing loop (chaotic movement)
             swarmInterval = setInterval(() => {
-                beesArray.forEach(bee => {
-                    let currentLeft = parseFloat(bee.style.left);
-                    let currentTop = parseFloat(bee.style.top);
-                    
-                    let dx = (Math.random() - 0.5) * 10; 
-                    let dy = (Math.random() - 0.5) * 10;
+                activeBees.forEach(bee => {
+                    // Current pos
+                    let curLeft = parseFloat(bee.style.left);
+                    let curTop = parseFloat(bee.style.top);
 
-                    let newLeft = Math.max(5, Math.min(90, currentLeft + dx));
-                    let newTop = Math.max(5, Math.min(90, currentTop + dy));
+                    // Random small change
+                    let moveX = (Math.random() - 0.5) * 15; // Max 7.5% move
+                    let moveY = (Math.random() - 0.5) * 15;
 
-                    bee.style.left = `${newLeft}%`;
-                    bee.style.top = `${newTop}%`;
-                    
-                    if(Math.random() > 0.7) {
-                        bee.style.transform = dx > 0 ? 'scaleX(1)' : 'scaleX(-1)';
-                    }
+                    // New pos bounded within container
+                    let newLeft = Math.max(2, Math.min(92, curLeft + moveX));
+                    let newTop = Math.max(2, Math.min(92, curTop + moveY));
+
+                    // Direction flip
+                    let scale = moveX > 0 ? 'scaleX(1)' : 'scaleX(-1)';
+
+                    bee.style.left = newLeft + '%';
+                    bee.style.top = newTop + '%';
+                    bee.style.transform = scale;
                 });
-            }, 100);
+            }, 150); // Fast update for chaotic 'buzz'
         }
 
-        function createBee() {
-            const bee = document.createElement('div');
-            bee.className = 'buzzing-bee';
-            bee.innerText = '🐝';
-            bee.style.left = `${Math.random() * 90 + 5}%`;
-            bee.style.top = `${Math.random() * 90 + 5}%`;
-            swarmContainer.appendChild(bee);
-            beesArray.push(bee);
+        // --- DYNAMIC ANIMATION: POLLEN (CSS Particles) ---
+        function startPollen() {
+            // Create 30 pollen balls with varied CSS animations
+            for(let i=0; i<30; i++) {
+                const pollen = document.createElement('div');
+                pollen.className = 'pollen-ball';
+                
+                // Randomize look and animation timing
+                let size = Math.random() * 8 + 4 + 'px'; // 4 to 12px
+                pollen.style.width = size;
+                pollen.style.height = size;
+                pollen.style.left = Math.random() * 100 + '%';
+                
+                let duration = Math.random() * 3 + 2 + 's'; // 2 to 5s fall
+                let delay = Math.random() * 5 + 's'; // random start times
+                pollen.style.animationDuration = duration;
+                pollen.style.animationDelay = delay;
+
+                dynamicContainer.appendChild(pollen);
+            }
         }
 
+        // --- SCROLL WHEEL CENTER LOGIC (Desktop) ---
+        // Makes clicking a thumb center it in the scroll view
+        const wheel = document.getElementById('scrollWheel');
+        wheel.addEventListener('click', (e) => {
+            const item = e.target.closest('.picker-item');
+            if (item) {
+                const wheelRect = wheel.getBoundingClientRect();
+                const itemRect = item.getBoundingClientRect();
+                const desiredFinalLeft = itemRect.left - wheelRect.left - (wheelRect.width / 2) + (itemRect.width / 2);
+                wheel.scrollBy({ left: desiredFinalLeft, behavior: 'smooth' });
+            }
+        });
+
+        // Start camera on load
         window.addEventListener('DOMContentLoaded', initCamera);
     </script>
 </body>
