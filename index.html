@@ -2,787 +2,302 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Why the Bambu A1 is a Good Investment</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Buzzing Bee Filter Camera! 🐝</title>
     <style>
-        /* General Reset & Font Import */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
-
-        * {
-            box-sizing: border-box;
+        :root {
+            --bee-yellow: #FFCC00;
+            --bee-black: #222222;
+            --honey-gold: #FDB813;
         }
 
         body {
-            font-family: 'Inter', 'Segoe UI', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #F5F7FA; /* Soft Tech White */
-            overflow: hidden;
-            color: #333;
-        }
-
-        /* Slide Container */
-        .slide-container {
-            position: relative;
-            width: 100vw;
-            height: 100vh;
-        }
-
-        /* Individual Slide Styling */
-        .slide {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 1s ease-out, visibility 1s ease-out;
-        }
-
-        /* Active Slide State */
-        .slide.active {
-            opacity: 1;
-            visibility: visible;
-            z-index: 10;
-        }
-
-        /* --- Title Slide Specifics --- */
-        .slide-title {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            background: #ECEFF1;
-        }
-
-        .title-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: 0;
-            opacity: 0.9;
-        }
-
-        .slide-title::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.4); 
-            z-index: 1;
-        }
-
-        .floating-box {
-            position: relative;
-            z-index: 2;
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(20px);
-            padding: 60px 80px;
-            border-radius: 2px; 
-            box-shadow: 0 20px 60px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.05);
-            text-align: center;
-            max-width: 850px;
-            border-bottom: 6px solid #00994d; 
-            transform: translateY(20px) scale(0.98);
-            transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.8s ease;
-        }
-
-        .slide.active .floating-box {
-            transform: translateY(0) scale(1);
-            box-shadow: 0 30px 80px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.05);
-        }
-
-        /* --- Table of Contents Slide --- */
-        .slide-toc {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: white;
-            padding: 60px;
-        }
-        
-        .toc-container {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .toc-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr); /* 3 Columns for full width feel */
-            gap: 30px;
-            width: 90%;
-            max-width: 1400px;
-        }
-
-        .toc-item {
-            background: #F8F9FA;
-            padding: 40px 30px;
-            border-radius: 4px;
-            border-left: 5px solid #00994d;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            opacity: 0;
-            transform: translateY(20px);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: radial-gradient(circle, var(--bee-yellow) 10%, var(--bee-black) 90%);
+            color: #fff;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-        }
-        
-        .slide.active .toc-item {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .toc-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            background: #fff;
-        }
-
-        .toc-number {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #00994d;
-            margin-bottom: 10px;
-            display: block;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .toc-headline {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: #1c1c1c;
-            margin-bottom: 15px;
-            display: block;
-        }
-
-        .toc-desc {
-            font-size: 1.1rem;
-            color: #666;
-            line-height: 1.6;
-        }
-
-        /* --- Content Slide Specifics --- */
-        .slide-content {
-            display: flex;
-            width: 100%;
-            height: 100%;
-            background: white;
-        }
-
-        /* Left Side: Text */
-        .content-text-side {
-            flex: 0 0 55%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 0 8%;
-            background: #ffffff;
-            height: 100%;
-            position: relative;
-        }
-        
-        /* Decorative Tech Line */
-        .content-text-side::before {
-            content: '';
-            position: absolute;
-            right: 0;
-            top: 20%;
-            bottom: 20%;
-            width: 1px;
-            background: linear-gradient(to bottom, transparent, #e0e0e0, transparent);
-        }
-
-        /* Right Side: Image */
-        .content-image-side {
-            flex: 1;
-            background-color: #f8f9fa;
-            display: flex;
-            justify-content: center;
             align-items: center;
-            position: relative;
+            justify-content: center;
+            min-height: 100vh;
             overflow: hidden;
         }
 
-        /* Subtle grid overlay for image side */
-        .content-image-side::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
-            background-size: 20px 20px;
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        /* Image Container */
-        .image-container {
-            position: relative;
-            z-index: 2;
-            width: 85%;
-            height: 70%;
-            background: #fff;
-            border-radius: 2px; 
-            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            border: 1px solid #eee;
-            transform: scale(0.95);
-            opacity: 0;
-            transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1);
-        }
-
-        .slide.active .image-container {
-            transform: scale(1);
-            opacity: 1;
-        }
-
-        .image-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* --- Comparison Slide Specifics --- */
-        .slide-comparison {
-            display: flex;
-            width: 100%;
-            height: 100%;
-            background: #fff;
-        }
-
-        .comparison-column {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            height: 100%;
-            position: relative;
-            padding: 40px;
-        }
-
-        .comp-bambu {
-            background-color: #fff;
-        }
-
-        .comp-ender {
-            background-color: #FAFBFC;
-        }
-
-        /* Vertical divider line */
-        .slide-comparison::after {
-            content: '';
-            position: absolute;
-            left: 50%;
-            top: 5%;
-            bottom: 5%;
-            width: 1px;
-            background-color: #e0e0e0;
-            z-index: 5;
-            transform: translateX(-50%);
-        }
-
-        .comp-header {
-            text-align: center;
-            padding: 30px 0;
-        }
-
-        .comp-logo {
-            font-size: 3.5rem;
-            font-weight: 700;
-            margin: 0;
-            position: relative;
-            letter-spacing: -1px;
-        }
-        
-        .comp-bambu .comp-logo { color: #00994d; } 
-        .comp-ender .comp-logo { color: #555; }
-
-        .comp-specs {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-            justify-content: space-around;
-        }
-
-        .comp-spec-item {
-            text-align: center;
-            padding: 10px;
-            border-radius: 2px; 
-            margin: 5px 0;
-            transform: translateY(20px);
-            opacity: 0;
-            transition: all 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
-        }
-
-        .slide.active .comp-spec-item {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        .slide.active .comp-spec-item:nth-child(1) { transition-delay: 0.1s; }
-        .slide.active .comp-spec-item:nth-child(2) { transition-delay: 0.15s; }
-        .slide.active .comp-spec-item:nth-child(3) { transition-delay: 0.2s; }
-        .slide.active .comp-spec-item:nth-child(4) { transition-delay: 0.25s; }
-        .slide.active .comp-spec-item:nth-child(5) { transition-delay: 0.3s; }
-        .slide.active .comp-spec-item:nth-child(6) { transition-delay: 0.35s; }
-
-        .comp-bambu .comp-spec-item {
-            border-left: 3px solid #00994d; 
-            background: rgba(0, 153, 77, 0.03); 
-        }
-
-        .comp-ender .comp-spec-item {
-            border-left: 3px solid #ddd;
-            background: #fff;
-        }
-
-        .spec-title {
-            display: block;
-            font-size: 0.8rem;
-            color: #888;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 4px;
-            font-weight: 600;
-        }
-
-        .spec-value {
-            display: block;
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: #333;
-            line-height: 1.2;
-        }
-        
-        .spec-value.highlight {
-            color: #008040; 
-        }
-        
-        .spec-value.lowlight {
-            color: #aaa;
-            text-decoration: line-through;
-            font-weight: 400;
-        }
-
-
-        /* Typography */
         h1 {
-            font-size: 3.2rem;
-            color: #1c1c1c;
-            margin-bottom: 25px;
-            font-weight: 700;
-            line-height: 1.2;
-            letter-spacing: -0.5px;
-        }
-
-        h2 {
-            font-size: 2.4rem;
-            color: #1c1c1c;
-            margin-bottom: 35px;
-            font-weight: 700;
-            position: relative;
-            display: inline-block;
-        }
-
-        h2::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 60px;
-            height: 4px;
-            background-color: #00994d; 
-            border-radius: 2px;
-        }
-
-        p {
-            font-size: 1.2rem;
-            line-height: 1.7;
-            margin-bottom: 25px;
-            color: #555;
-            font-weight: 400;
-        }
-
-        /* Custom List Styling */
-        .custom-list {
-            text-align: left;
-            margin: 0 0 30px 0;
-            padding: 0;
-            list-style: none;
-        }
-
-        .custom-list li {
-            margin-bottom: 18px;
-            font-size: 1.2rem;
-            color: #444;
-            padding-left: 35px;
-            position: relative;
-            line-height: 1.5;
-        }
-
-        .custom-list li::before {
-            content: '>';
-            color: #00994d; 
-            position: absolute;
-            left: 0;
-            font-weight: bold;
-            font-family: monospace; 
-            font-size: 1.3rem;
-            top: -2px;
-        }
-        
-        .list-highlight {
-            font-weight: 600;
-            color: #333;
-        }
-
-        /* Navigation Hint */
-        .nav-hint {
-            position: fixed;
-            bottom: 30px;
-            right: 40px;
-            color: #333;
-            font-size: 0.9rem;
-            z-index: 100;
-            background: rgba(255,255,255,0.8);
-            padding: 10px 20px;
-            border-radius: 30px;
-            backdrop-filter: blur(10px);
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            border: 1px solid rgba(0,0,0,0.05);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-
-        .nav-hint span {
-            display: inline-block;
-            width: 24px;
-            height: 24px;
-            border: 1px solid rgba(0,0,0,0.1);
-            border-radius: 50%;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+            margin-bottom: 10px;
+            font-size: 2.5rem;
             text-align: center;
-            line-height: 22px;
-            font-size: 0.8rem;
-            color: #00994d; 
         }
 
-        /* Progress Bar */
-        .progress-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 4px;
-            background: #00994d; 
-            z-index: 200;
-            transition: width 0.4s ease;
-            box-shadow: 0 0 10px rgba(0, 153, 77, 0.3);
+        h1 span {
+            display: inline-block;
+            animation: bounce 0.6s infinite alternate;
         }
 
-        /* Animation classes for text */
-        .slide-up {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-10px); }
         }
 
-        .slide.active .slide-up {
-            opacity: 1;
-            transform: translateY(0);
+        /* Camera Container Setup */
+        .camera-container {
+            position: relative;
+            width: 640px;
+            height: 480px;
+            max-width: 90vw;
+            max-height: 70vh;
+            border: 8px solid var(--bee-black);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            background-color: #000;
+            overflow: hidden;
         }
 
-        .delay-1 { transition-delay: 0.1s; }
-        .delay-2 { transition-delay: 0.2s; }
-        .delay-3 { transition-delay: 0.3s; }
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scaleX(-1); /* Mirror view for natural interaction */
+            transition: filter 0.3s ease;
+        }
 
+        /* --- FILTERS LAYERS --- */
+        
+        /* 1. Honey Glow Filter */
+        .filter-honey video {
+            filter: scaleX(-1) sepia(0.5) saturate(2.5) contrast(1.1) hue-rotate(-10deg);
+        }
+
+        /* 2. Bee Vision (Hexagon Overlay) */
+        .filter-vision video {
+            filter: scaleX(-1) saturate(3) contrast(1.3) sepia(0.2);
+        }
+        .hex-overlay {
+            display: none;
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            opacity: 0.25;
+            background-color: #ffcc00;
+            /* Creates a clean CSS hexagon pattern */
+            background-image: 
+                radial-gradient(circle at 50% 50%, transparent 45%, #000 45%, #000 55%, transparent 55%),
+                radial-gradient(circle at 0 0, transparent 45%, #000 45%, #000 55%, transparent 55%),
+                radial-gradient(circle at 100% 0, transparent 45%, #000 45%, #000 55%, transparent 55%),
+                radial-gradient(circle at 0 100%, transparent 45%, #000 45%, #000 55%, transparent 55%),
+                radial-gradient(circle at 100% 100%, transparent 45%, #000 45%, #000 55%, transparent 55%);
+            background-size: 30px 52px;
+        }
+        .filter-vision .hex-overlay {
+            display: block;
+        }
+
+        /* 3. Queen Bee Layer */
+        .queen-overlay {
+            display: none;
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            box-sizing: border-box;
+            border: 15px solid transparent;
+            border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30'%3E%3Ctext y='20' font-size='20'%3E🌻%3C/text%3E%3C/svg%3E") 30 round;
+        }
+        .queen-crown {
+            display: none;
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 4rem;
+            animation: float 2s infinite ease-in-out;
+        }
+        .filter-queen .queen-overlay, .filter-queen .queen-crown {
+            display: block;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateX(-50%) translateY(0) rotate(0deg); }
+            50% { transform: translateX(-50%) translateY(-10px) rotate(3deg); }
+        }
+
+        /* 4. Swarm Layer Container */
+        .swarm-container {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .buzzing-bee {
+            position: absolute;
+            font-size: 2rem;
+            transition: all 0.5s linear;
+        }
+
+        /* Controls Section */
+        .controls {
+            margin-top: 25px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        button {
+            background-color: var(--bee-black);
+            color: var(--bee-yellow);
+            border: 3px solid var(--bee-yellow);
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+
+        button:hover {
+            background-color: var(--bee-yellow);
+            color: var(--bee-black);
+            transform: scale(1.05);
+        }
+
+        button.active {
+            background-color: #fff;
+            color: var(--bee-black);
+            border-color: #fff;
+            box-shadow: 0 0 15px #fff;
+        }
+
+        .error-msg {
+            color: #ff4444;
+            background: rgba(0,0,0,0.8);
+            padding: 15px;
+            border-radius: 10px;
+            display: none;
+            text-align: center;
+            max-width: 80%;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
 
-    <div class="progress-bar" id="progress"></div>
+    <h1>
+        <span>🐝</span> Bee Cam <span>🐝</span>
+    </h1>
 
-    <div class="slide-container">
-
-        <!-- Slide 1: Title -->
-        <div class="slide slide-title active">
-            <img src="bambu.jpg" alt="Bambu Lab Background" class="title-bg">
-            <div class="floating-box">
-                <h1>Why Getting a Bambu A1 is a Smart Decision</h1>
-                <p style="font-size: 1.3rem; color: #666; margin-bottom: 0;">Key reasons why this is a great investment for the future.</p>
-            </div>
-        </div>
-
-        <!-- Slide 2: Table of Contents -->
-        <div class="slide slide-toc">
-            <div class="toc-container">
-                <div class="toc-grid">
-                    <div class="toc-item slide-up delay-1">
-                        <span class="toc-number">01</span>
-                        <span class="toc-headline">Skills & Application</span>
-                        <span class="toc-desc">Master CAD, solve real-world problems, and develop engineering skills.</span>
-                    </div>
-                    <div class="toc-item slide-up delay-2">
-                        <span class="toc-number">02</span>
-                        <span class="toc-headline">School Projects</span>
-                        <span class="toc-desc">Create high-quality models and professional presentations for class.</span>
-                    </div>
-                    <div class="toc-item slide-up delay-3">
-                        <span class="toc-number">03</span>
-                        <span class="toc-headline">Fosters Creativity</span>
-                        <span class="toc-desc">Innovate and bring imaginative ideas to life through rapid prototyping.</span>
-                    </div>
-                    <div class="toc-item slide-up delay-1">
-                        <span class="toc-number">04</span>
-                        <span class="toc-headline">Teaching & Sharing</span>
-                        <span class="toc-desc">Mentor my brother in design and help him with his school projects.</span>
-                    </div>
-                    <div class="toc-item slide-up delay-2">
-                        <span class="toc-number">05</span>
-                        <span class="toc-headline">Competitive Robotics</span>
-                        <span class="toc-desc">Essential for FTC/FRC prototyping, custom parts, and competition repairs.</span>
-                    </div>
-                    <div class="toc-item slide-up delay-3">
-                        <span class="toc-number">06</span>
-                        <span class="toc-headline">Comparison</span>
-                        <span class="toc-desc">Why Bambu A1 outperforms the Ender 3 in speed, reliability, and features.</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 3: Skills & Real-world Application (Merged) -->
-        <div class="slide slide-content">
-            <div class="content-text-side">
-                <div class="slide-up delay-1">
-                    <h2>1. Skills & Real-world Value</h2>
-                </div>
-                <div class="slide-up delay-2">
-                    <ul class="custom-list">
-                        <li>Master <span class="list-highlight">CAD software</span> and the engineering design process.</li>
-                        <li>Solve household problems by creating <span class="list-highlight">replacement parts</span> and tools.</li>
-                        <li>Develop critical <span class="list-highlight">problem-solving skills</span> through hands-on experience.</li>
-                        <li>Save money by <span class="list-highlight">manufacturing solutions</span> at home instantly.</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="content-image-side">
-                <div class="image-container">
-                    <img src="1_bambu.jpg" alt="Skills and Engineering">
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 4: School Projects -->
-        <div class="slide slide-content">
-            <div class="content-text-side">
-                <div class="slide-up delay-1">
-                    <h2>2. School Projects</h2>
-                </div>
-                <div class="slide-up delay-2">
-                    <ul class="custom-list">
-                        <li>Create models using <span class="list-highlight">durable plastic</span> instead of fragile cardboard.</li>
-                        <li>Produce professional-quality presentations that stand out.</li>
-                        <li>Bring abstract concepts to life for science and history classes.</li>
-                        <li>Makes completing complex projects <span class="list-highlight">easier and more enjoyable</span>.</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="content-image-side">
-                <div class="image-container">
-                    <img src="2_bambu.jpg" alt="School Projects">
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 5: Fosters Creativity -->
-        <div class="slide slide-content">
-            <div class="content-text-side">
-                <div class="slide-up delay-1">
-                    <h2>3. Fosters Creativity</h2>
-                </div>
-                <div class="slide-up delay-2">
-                    <ul class="custom-list">
-                        <li>Freedom to design and print <span class="list-highlight">whatever I imagine</span>.</li>
-                        <li>Encourages innovation through rapid prototyping.</li>
-                        <li>Transforms digital ideas into physical objects instantly.</li>
-                        <li>Provides a creative outlet for <span class="list-highlight">artistic and technical expression</span>.</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="content-image-side">
-                <div class="image-container">
-                    <img src="3D_print_projects_f1fc43ef-e8eb-42c5-93a8-190f5aca1986.webp" alt="Creativity">
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 6: Teaching My Brother (New) -->
-        <div class="slide slide-content">
-            <div class="content-text-side">
-                <div class="slide-up delay-1">
-                    <h2>4. Teaching & Sharing</h2>
-                </div>
-                <div class="slide-up delay-2">
-                    <ul class="custom-list">
-                        <li>Opportunity to <span class="list-highlight">mentor my brother</span> in 3D design and printing.</li>
-                        <li>He can create high-quality models for his own <span class="list-highlight">school projects</span>.</li>
-                        <li>Encourages an early interest in <span class="list-highlight">STEM and innovation</span> for the family.</li>
-                        <li>A shared resource that provides <span class="list-highlight">educational value</span> for everyone.</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="content-image-side">
-                <div class="image-container">
-                    <!-- Reusing an image slot, user can replace src -->
-                    <img src="1_bambu.webp" alt="Teaching and Sharing">
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 7: Competitive Robotics (FTC & FRC) -->
-        <div class="slide slide-content">
-            <div class="content-text-side">
-                <div class="slide-up delay-1">
-                    <h2>5. Competitive Robotics</h2>
-                </div>
-                <div class="slide-up delay-2">
-                    <ul class="custom-list">
-                        <li>Essential for <span class="list-highlight">FTC & FRC</span> team prototyping and iteration.</li>
-                        <li>Fabricate <span class="list-highlight">custom brackets</span>, spacers, and mounts on demand.</li>
-                        <li>Build entire custom robots from my own designs.</li>
-                        <li>Rapidly repair broken parts during competition.</li>
-                        <li>Gives the team a <span class="list-highlight">competitive edge</span> with custom mechanisms.</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="content-image-side">
-                <div class="image-container">
-                    <img src="frc.jpg" alt="Robotics Application">
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 8: Comparison -->
-        <div class="slide slide-comparison">
-            <!-- Bambu Side -->
-            <div class="comparison-column comp-bambu">
-                <div class="comp-header">
-                    <div class="comp-logo">Bambu A1</div>
-                </div>
-                <div class="comp-specs">
-                    <div class="comp-spec-item">
-                        <span class="spec-title">Auto Bed Leveling</span>
-                        <span class="spec-value highlight">Yes ✓</span>
-                    </div>
-                    <div class="comp-spec-item">
-                        <span class="spec-title">Print Size</span>
-                        <span class="spec-value">256 x 256 x 256 mm</span>
-                    </div>
-                    <div class="comp-spec-item">
-                        <span class="spec-title">Max Print Speed</span>
-                        <span class="spec-value highlight">500mm/s</span>
-                    </div>
-                    <div class="comp-spec-item">
-                        <span class="spec-title">Printable Materials</span>
-                        <span class="spec-value highlight">PLA, PETG, TPU</span>
-                    </div>
-                    <div class="comp-spec-item">
-                        <span class="spec-title">Multi-color (AMS)</span>
-                        <span class="spec-value highlight">Yes ✓</span>
-                    </div>
-                    <div class="comp-spec-item">
-                        <span class="spec-title">Filament Run-out</span>
-                        <span class="spec-value highlight">Yes ✓</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Ender Side -->
-            <div class="comparison-column comp-ender">
-                <div class="comp-header">
-                    <div class="comp-logo">Ender 3</div>
-                </div>
-                <div class="comp-specs">
-                    <div class="comp-spec-item">
-                        <span class="spec-title">Auto Bed Leveling</span>
-                        <span class="spec-value lowlight">No ✗</span>
-                    </div>
-                    <div class="comp-spec-item">
-                        <span class="spec-title">Print Size</span>
-                        <span class="spec-value">220 x 220 x 250 mm</span>
-                    </div>
-                    <div class="comp-spec-item">
-                        <span class="spec-title">Max Print Speed</span>
-                        <span class="spec-value lowlight">180mm/s</span>
-                    </div>
-                    <div class="comp-spec-item">
-                        <span class="spec-title">Printable Materials</span>
-                        <span class="spec-value">PLA, PETG</span>
-                    </div>
-                    <div class="comp-spec-item">
-                        <span class="spec-title">Multi-color (AMS)</span>
-                        <span class="spec-value lowlight">No ✗</span>
-                    </div>
-                    <div class="comp-spec-item">
-                        <span class="spec-title">Filament Run-out</span>
-                        <span class="spec-value lowlight">No ✗</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+    <div class="camera-container" id="camContainer">
+        <video id="video" autoplay playsinline muted></video>
+        <div class="hex-overlay"></div>
+        <div class="queen-overlay"></div>
+        <div class="queen-crown">👑</div>
+        <div class="swarm-container" id="swarmContainer"></div>
     </div>
 
-    <div class="nav-hint">
-        <span>←</span> <span>→</span> Arrow Keys to Navigate
+    <div class="error-msg" id="errorMsg">
+        Unable to access camera. Please ensure you have granted camera permissions and are using HTTPS or localhost!
+    </div>
+
+    <div class="controls">
+        <button onclick="setFilter('normal', this)" class="active">Normal Cam</button>
+        <button onclick="setFilter('honey', this)">🍯 Honey Glow</button>
+        <button onclick="setFilter('vision', this)">👁️ Bee Vision</button>
+        <button onclick="setFilter('queen', this)">👑 Queen Bee</button>
+        <button onclick="setFilter('swarm', this)">🐝 Bee Swarm!</button>
     </div>
 
     <script>
-        const slides = document.querySelectorAll('.slide');
-        const progressBar = document.getElementById('progress');
-        let currentSlide = 0;
-        const totalSlides = slides.length;
+        const video = document.getElementById('video');
+        const container = document.getElementById('camContainer');
+        const swarmContainer = document.getElementById('swarmContainer');
+        const errorMsg = document.getElementById('errorMsg');
+        let swarmInterval = null;
+        let beesArray = [];
 
-        function showSlide(index) {
-            if (index >= totalSlides) index = totalSlides - 1;
-            if (index < 0) index = 0;
-
-            slides[currentSlide].classList.remove('active');
-            currentSlide = index;
-            slides[currentSlide].classList.add('active');
-
-            const progressPercentage = ((currentSlide) / (totalSlides - 1)) * 100;
-            progressBar.style.width = progressPercentage + '%';
+        // Initialize Webcam
+        async function initCamera() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({
+                    video: { width: 640, height: 480 },
+                    audio: false
+                });
+                video.srcObject = stream;
+            } catch (err) {
+                console.error("Error accessing camera: ", err);
+                errorMsg.style.display = 'block';
+            }
         }
 
-        window.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
-                showSlide(currentSlide + 1);
-            } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
-                showSlide(currentSlide - 1);
-            }
-        });
+        // Handle switching filter classes
+        function setFilter(filterName, buttonElement) {
+            // Remove active classes from buttons
+            document.querySelectorAll('.controls button').forEach(btn => btn.classList.remove('active'));
+            buttonElement.classList.add('active');
 
-        showSlide(0);
+            // Reset container classes
+            container.className = 'camera-container';
+            
+            // Clear any active swarm intervals/elements
+            clearInterval(swarmInterval);
+            swarmContainer.innerHTML = '';
+            beesArray = [];
+
+            // Apply selected filter logic
+            if (filterName !== 'normal') {
+                container.classList.add(`filter-${filterName}`);
+            }
+
+            if (filterName === 'swarm') {
+                startSwarm();
+            }
+        }
+
+        // Dynamic Swarm Logic
+        function startSwarm() {
+            // Create initial bees
+            for(let i = 0; i < 12; i++) {
+                createBee();
+            }
+            // Update bee positions rapidly to mimic buzzing
+            swarmInterval = setInterval(() => {
+                beesArray.forEach(bee => {
+                    // Update to a nearby position to simulate chaotic buzzing
+                    let currentLeft = parseFloat(bee.style.left);
+                    let currentTop = parseFloat(bee.style.top);
+                    
+                    let dx = (Math.random() - 0.5) * 8; 
+                    let dy = (Math.random() - 0.5) * 8;
+
+                    // Keep bees inside the container bounds roughly
+                    let newLeft = Math.max(5, Math.min(90, currentLeft + dx));
+                    let newTop = Math.max(5, Math.min(90, currentTop + dy));
+
+                    bee.style.left = `${newLeft}%`;
+                    bee.style.top = `${newTop}%`;
+                    
+                    // Randomly flip bee looking direction
+                    if(Math.random() > 0.7) {
+                        bee.style.transform = dx > 0 ? 'scaleX(1)' : 'scaleX(-1)';
+                    }
+                });
+            }, 100);
+        }
+
+        function createBee() {
+            const bee = document.createElement('div');
+            bee.className = 'buzzing-bee';
+            bee.innerText = '🐝';
+            bee.style.left = `${Math.random() * 90 + 5}%`;
+            bee.style.top = `${Math.random() * 90 + 5}%`;
+            swarmContainer.appendChild(bee);
+            beesArray.push(bee);
+        }
+
+        // Boot up camera on load
+        window.addEventListener('DOMContentLoaded', initCamera);
     </script>
 </body>
 </html>
