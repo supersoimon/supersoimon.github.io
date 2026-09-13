@@ -12,6 +12,13 @@
                 font-family: Ubuntu, sans-serif;
                 margin: 30px 30px 10px 30px;
             }
+            h2 {
+                color: #f0f0f0;
+                font-size: 30px;
+                font-weight: bold;
+                font-family: Ubuntu, sans-serif;
+                margin: 30px 30px 10px 30px;
+            }
             p {
                 color: #f0f0f0;
                 font-size: 15px;
@@ -28,6 +35,19 @@
             a {
                 color: #f0f0f0;
                 text-decoration: none;
+            }
+            .box-container {
+                display: flex;
+                gap: 30px;
+                margin: 20px 30px 20px 30px;
+            }
+            .box {
+                flex: 1;
+                background-color: #f0f0f0;
+                color: #00151f;
+                padding: 20px;
+                height: 200px;
+                text-align: left;
             }
         </style>
         <title>
@@ -53,5 +73,22 @@
         <p>
             You can check this out on my github page <a href="https://github.com/supersoimon/big-keyboard">here</a>
         </p>
+        <h2>
+            My Projects
+        </h2>
+        <div class="box-container">
+            <div class="box">
+                <h3>Keyboard</h3>
+                <p>A custom 80% mechanical keyboard with unique switch configuration and custom case.</p>
+            </div>
+            <div class="box">
+                <h3>Personal Website</h3>
+                <p>A custom website showcasing my projects and skills.</p>
+            </div>
+            <div class="box">
+                <h3>Watchy the Watch!</h3>
+                <p>A fully custom watch with a unique design and case.</p>
+            </div>
+        </div>
     </body>
 </html>
