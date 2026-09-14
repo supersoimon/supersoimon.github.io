@@ -88,6 +88,41 @@
                 font-family: Oswald, sans-serif;
                 margin: 20px 30px 0px 30px;           
             }
+            .top-container {
+                display: flex;
+                gap: 30px;
+                margin: 30px 30px 20px 30px;
+            }
+            .top-box-main {
+                flex: 1.5;
+                background-color: #1c1d1d;
+                color: #232323;
+                padding: 20px;
+                height: 200px;
+                text-align: left;
+            }
+            .top-box-side {
+                flex: 1;
+                background-color: #1c1d1d;
+                color: #232323;
+                padding: 20px;
+                height: 200px;
+                text-align: left;
+            }
+            .top-box-main h1 {
+                color: #f0f0f0;
+                font-size: 120px;
+                font-weight: bold;
+                font-family: Oswald, sans-serif;
+                margin: 0px 0px 0px 0px;           
+            }
+            .top-box-side h3 {
+                color: #f0f0f0;
+                font-size: 20px;
+                font-weight: bold;
+                font-family: Oswald, sans-serif;
+                margin: 0px 0px 0px 0px;           
+            }
         
         </style>
         <title>
@@ -95,20 +130,18 @@
         </title>
     </head>
     <body>
-        <h1>
-            Hi, I'm Simon!
-        </h1>
-        <p>
-            I do robotics, programming and lots of other fun stuff! I'm currently in Grade 11.
-        </p>
-        <p>
-            Right now, I'm working on a couple of projects! 
-        </p>
-        <p>
-            My favourite is a custom 80% keyboard! I'm currently working on the physical assembly.
-        </p>
+        <div class="top-container">
+            <div class="top-box-main">
+                <h1>I'm Simon</h1>
+            </div>
+            <div class="top-box-side">
+                <h3>About Me</h3>
+                <boxtext>I'm an aspiring grade 11 student who loves to do robotics, programming and lots of other fun stuff! I'm currently in Grade 11.</boxtext>
+                <boxtext>Right now, I'm working on a couple of projects! My favourite is a custom 80% keyboard! I'm currently working on the physical assembly.</boxtext>
+            </div>
+        </div>
         <imgsty>
-            <img src="IMAGES/Keyboard.jpg" class="front-image" alt="PCB Design for Keyboard">
+            <img src="IMAGES/Keyboard.png" class="front-image" alt="PCB Design for Keyboard">
         </imgsty>
         <p>
             You can check this out on my github page <a href="https://github.com/supersoimon/big-keyboard">HERE</a>
