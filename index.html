@@ -1,36 +1,39 @@
-<html>
-    <head>
-        <style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+            @import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@300;400;600;700&display=swap');
             body {
-                background-color: #0A0A0A;
-                font-family: Noto Sans, sans-serif;
+                background-color: #FFFFEd;
+                font-family: Amatic SC, sans-serif;
             }
             h1 {
-                color: #f0f0f0;
+                color: #232323;
                 font-size: 50px;
                 font-weight: bold;
-                font-family: Oswald, sans-serif;
+                font-family: Amatic SC, sans-serif;
                 margin: 30px 30px 10px 30px;
             }
             h2 {
-                color: #f0f0f0;
+                color: #232323;
                 font-size: 30px;
                 font-weight: bold;
                 font-family: Oswald, sans-serif;
-                margin: 30px 30px 10px 30px;
+                margin: 0px 30px 10px 30px;
             }
             
             h3 {
-                color: #f0f0f0;
+                color: #232323;
                 font-size: 20px;
                 font-weight: bold;
                 font-family: Oswald, sans-serif;
                 margin: 0px 0px 0px 0px;
             }
             p {
-                color: #f0f0f0;
+                color: #232323;
                 font-size: 15px;
-                font-family: Noto Sans, sans-serif;
+                font-family: Oswald, sans-serif;
                 margin: 5px 30px 0px 30px;
 
             }
@@ -44,38 +47,130 @@
                 width: calc(100vw - 120px);
                 margin: 0px 0px 0px 30px;
             }
+            .FRC-image {
+                width: calc(15vw);
+                position: absolute;
+                transform: rotate(-5deg);
+                top: calc(100vh * 240 / 585.33);
+                right: calc(100vw * 800 / 1280);                 
+            }
+            .FRChands-image {
+                width: calc(30vw);
+                position: absolute;
+                transform: rotate(-5deg);
+                top: calc(100vh * 35 / 585.33);
+                right: calc(100vw * 600 / 1280);                 
+            }
+            .schematic-image {
+                width: calc(32.5vw);
+                position: absolute;
+                transform: rotate(0deg);
+                top: calc(100vh * (-10) / 585.33);
+                right: calc(100vw * 845 / 1280);                 
+            }
+            .ATAT-image {
+                width: calc(35vw);
+                position: absolute;
+                transform: rotate(-15deg);
+                top: calc(100vh * (200) / 585.33);
+                right: calc(100vw * 100 / 1280);                 
+            }
+            .FTC-image {
+                width: calc(25vw);
+                position: absolute;
+                transform: rotate(10deg);
+                top: calc(100vh * 190 / 585.33);
+                right: calc(100vw * 980 / 1280);                 
+            }
+            .Cuttlefish-image {
+                width: calc(25vw);
+                position: absolute;
+                transform: rotate(10deg);
+                top: calc(100vh * 50 / 585.33);
+                right: calc(100vw * 300 / 1280);                 
+            }
+            .FTCLogo-image {
+                width: calc(67vw);
+                position: absolute;
+                transform: rotate(0deg);
+                top: calc(100vh * -10 / 585.33);
+                right: calc(100vw * -8 / 1280);                 
+            }
+            .WatchBorder-image {
+                width: calc(20vw);
+                position: absolute;
+                transform: rotate(-5deg);
+                top: calc(100vh * 280 / 585.33);
+                right: calc(100vw * 450 / 1280);                 
+            }
+            .AI-image {
+                height: calc(65vh);
+                position: absolute;
+                transform: rotate(0deg);
+                top: calc(33.5vh);
+                right: calc(100vw * -8 / 1280);                 
+            }
+            .keyboard-image {
+                width: calc(45vw);
+                position: absolute;
+                transform: rotate(0deg);
+                top: calc(100vh * 358 / 585.33 + 2.25vh);
+                right: calc(100vw * 685 / 1280);                 
+            }
             boxtext {
-                color: #f0f0f0;
+                color: #232323;
                 font-size: 15px;
-                font-family: Noto Sans, sans-serif;
+                font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
                 margin: 10px 0px 0px 0px;
 
             }
             a {
-                color: #f0f0f0;
-                text-decoration: underline;
+                color: #232323;
+                font-weight: bold;
+                text-decoration: none;
             }
             .box-container {
                 display: flex;
                 gap: 30px;
-                margin: 10px 30px 20px 30px;
+                margin: 10px 14px 20px 30px;
             }
             .box {
                 flex: 1;
-                background-color: #1c1d1d;
+                background-color: #fdfbd4;
                 color: #232323;
-                padding: 20px;
-                height: calc(0.12114 * 100vw + 64px);
+                border: 4px solid #232323;
+                padding: 10px;
+                height: calc(0.12114 * 100vw + 64px) + 20px;
                 text-align: left;
             }
             .socials {
-                margin: 10px 0px 20px 30px;
-                background-color: #232323;
-                width: calc(100vw);
-                height: 105px;
+                margin: 10px 30px 10px 30px;
+                background-color: #fdfbd4;
+                border: 4px solid #232323;
+                width: calc(100vw - 90px);
+                height: 20px;
+                padding: 10px;
+            }
+            .aboutme {
+                margin: 20px 30px 20px 30px;
+                background-color: #fdfbd4;
+                border: 4px solid #232323;
+                width: calc(100vw - 104px);
+                height: 40px;
+                padding: 10px;
+                max-width: 100%;
+            }
+            .socials {
+                margin: 10px 30px 10px 30px;
+                background-color: #fdfbd4;
+                border: 4px solid #232323;
+                width: calc(100vw - 104px);
+                height: 20px;
+                padding: 10px;
+                max-width: 100%;
             }
             .socials h2 {
-                color: #f0f0f0;
+                color: #232323;
                 font-size: 30px;
                 font-weight: bold;
                 font-family: Oswald, sans-serif;
@@ -88,40 +183,51 @@
                 font-family: Oswald, sans-serif;
                 margin: 20px 30px 0px 30px;           
             }
-            .top-container {
+           
+            .top-box {
+                position: relative;
                 display: flex;
-                gap: 30px;
-                margin: 30px 30px 20px 30px;
-            }
-            .top-box-main {
-                flex: 1.5;
-                background-color: #1c1d1d;
+                background-color: #ffffed;
                 color: #232323;
-                padding: 20px;
-                height: 200px;
-                text-align: left;
+                height: calc(100vh);
+                text-align: center;
+                align-items: center;
+                justify-content: center;
+                margin: 0px 0px 20px 0px;
             }
-            .top-box-side {
-                flex: 1;
-                background-color: #1c1d1d;
+            .scrollbutton {
+                position: absolute;
+                width: calc(20vw);
+                height: calc(10vh);
+                bottom: calc(100vh * 40 / 585.33);
+                left: 50%;
+                transform: translateX(-50%);
+                border-radius: calc(5vw);
+                padding: 10px 20px;
+                font-size: 16px;
+                background-color: #fdfbd4;
                 color: #232323;
-                padding: 20px;
-                height: 200px;
-                text-align: left;
+                border: 2px solid #232323;
+                cursor: pointer;
             }
-            .top-box-main h1 {
-                color: #f0f0f0;
-                font-size: 120px;
+            .top-box h1 {
+                color: #232323;
+                font-size: calc(100 * 100vh / 585.33);
                 font-weight: bold;
-                font-family: Oswald, sans-serif;
+                font-family: Amatic SC, sans-serif;
                 margin: 0px 0px 0px 0px;           
             }
-            .top-box-side h3 {
-                color: #f0f0f0;
-                font-size: 20px;
-                font-weight: bold;
-                font-family: Oswald, sans-serif;
-                margin: 0px 0px 0px 0px;           
+            .oval-container {
+                height: calc(30vh);
+                width: calc(40vw);
+                display: flex;
+                position: relative;
+                border-radius: calc(5vw);
+                background-color: #FFFFEd;
+                text-align: center;
+                align-items: center;
+                justify-content: center;
+                border: 8px solid #232323;
             }
         
         </style>
@@ -130,22 +236,48 @@
         </title>
     </head>
     <body>
-        <div class="top-container">
-            <div class="top-box-main">
+         <div class="top-box">
+            <img src="IMAGES/AI.png" class="AI-image" alt="AI Image">
+            <img src="IMAGES/FTCLogo.png" class="FTCLogo-image" alt="FTC Logo Image">
+            <img src="IMAGES/KeyboardWBorder.png" class="keyboard-image" alt="80% Keyboard Image">
+            <img src="IMAGES/Schematic.png" class="schematic-image" alt="schematic Image">
+            <img src="IMAGES/FTC.png" class="FTC-image" alt="FTC Robot Image">
+            <img src="IMAGES/CuttlefishLogo.png" class="Cuttlefish-image" alt="Cuttlefish Logo">
+            <img src="IMAGES/FRCHands.png" class="FRChands-image" alt="FRC Robot Image">
+            <img src="IMAGES/FRC.png" class="FRC-image" alt="FRC Robot Image">
+            <img src="IMAGES/AT-AT.png" class="ATAT-image" alt="ATAT Image">
+            <img src="IMAGES/WatchBorder.png" class="WatchBorder-image" alt="Watch Border Image">
+
+            <div class="oval-container">
                 <h1>I'm Simon</h1>
             </div>
-            <div class="top-box-side">
+            <button class="scrollbutton" onclick="scrollslower(2)">Meet me!</button>
+
+
+        
+         </div>
+        <h2>
+            About Me
+        </h2>
+        <div class="aboutme">
+            <boxtext>
+                I'm an aspiring grade 11 student who loves to do robotics, programming and lots of other fun stuff!
+                I'm in Grade 11, and my favourite class is Physics! Right now, I'm working on a couple of projects! My favourite is a custom 80% keyboard! 
+                Now, I'm working on the physical assembly.  
+            </boxtext>
+        </div>
+        
+            <!--<div class="top-box-side">
                 <h3>About Me</h3>
                 <boxtext>I'm an aspiring grade 11 student who loves to do robotics, programming and lots of other fun stuff! I'm currently in Grade 11.</boxtext>
                 <boxtext>Right now, I'm working on a couple of projects! My favourite is a custom 80% keyboard! I'm currently working on the physical assembly.</boxtext>
             </div>
-        </div>
         <imgsty>
             <img src="IMAGES/Keyboard.png" class="front-image" alt="PCB Design for Keyboard">
         </imgsty>
         <p>
             You can check this out on my github page <a href="https://github.com/supersoimon/big-keyboard">HERE</a>
-        </p>
+        </p>-->
         <h2>
             My Projects
         </h2>
@@ -153,32 +285,55 @@
             <div class="box">
                 <h3>Keyboard</h3>
                 <boxtext>A custom 80% mechanical keyboard with unique switch configuration and custom case.</boxtext>
-                <boxtext>See the GitHub <a href="https://github.com/supersoimon/big-keyboard">HERE</a></boxtext> 
+                <boxtext>See the GitHub <a href="https://github.com/supersoimon/big-keyboard">here</a></boxtext> 
                 <img src="IMAGES/KeyboardCAD.png" class="project-image" alt="CAD Design for Keyboard" >
             </div>
             <div class="box">
                 <h3>Personal Website</h3>
-                <boxtext>A custom website showcasing my projects and skills.</boxtext>
-                <boxtext>See the GitHub <a href="https://github.com/supersoimon/supersoimon.github.io">HERE</a></boxtext>
+                <boxtext>A custom website showcasing my projects, skills, and some stuff about me! (Done in HTML and CSS)</boxtext>
+                <boxtext>See the GitHub <a href="https://github.com/supersoimon/supersoimon.github.io">here</a></boxtext>
                 <img src="IMAGES/Website.png" class="project-image" alt="Personal Website" >
 
             </div>
             <div class="box">
                 <h3>Watchy the Watch!</h3>
                 <boxtext>A fully custom watch with a unique design and case.</boxtext>
-                <boxtext>See the GitHub <a href="https://github.com/supersoimon/big-keyboard">HERE</a></boxtext>
+                <boxtext>See the GitHub <a href="https://github.com/supersoimon/big-keyboard">here.</a></boxtext>
+                <boxtext>No images yet :(</boxtext>
             </div>
         </div>
+        <h2>
+            Contact Me
+        </h2>
         <div class="socials">
-            <h1>
-                blank
-            </h1>
-            <h2>
-                Contact Me
-            </h2>
-            <p>
-                You can reach me on LinkedIn at <a href="https://www.linkedin.com/in/simon-gidrewicz-6b2854324/">HERE</a>  
-            </p>
+            <boxtext>
+                You can reach me on LinkedIn <a href="https://www.linkedin.com/in/simon-gidrewicz-6b2854324/">here</a>  
+            </boxtext>
         </div>
+        <script>
+            function scrolldown() {
+                window.scrollBy({
+                    top: window.innerHeight,
+                    left: 0,
+                    behavior: 'smooth'
+                })
+            }
+            function scrollslower() {
+                let scrollSpeed = 20; // Adjust this value to control the speed of scrolling
+                function scrolling() {
+                    const error = window.innerHeight - window.scrollY;
+                    if (window.scrollY > (window.innerHeight * 0.9)) {
+                        scrollSpeed = 0.001 * (error) * (error) + 2;
+                    }
+                    window.scrollBy(0, scrollSpeed); 
+                    const isAtBottom = (window.innerHeight + Math.ceil(window.scrollY)) >= document.documentElement.scrollHeight;
+
+                    if ((window.scrollY < window.innerHeight)) {
+                        requestAnimationFrame(scrolling);
+                    }
+                }
+                requestAnimationFrame(scrolling);
+            }
+        </script>
     </body>
 </html>
