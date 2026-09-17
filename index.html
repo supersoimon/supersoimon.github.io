@@ -330,8 +330,9 @@
                     );
                 function scrolling() {
                     if (window.innerHeight * 2 < totalHeight) {
-                        const error = window.innerHeight - window.scrollY;
+                        target = totalHeight-window.innerHeight
                     }
+                    const error = window.innerHeight - window.scrollY;
                     if (window.scrollY > (target * 0.9)) {
                         scrollSpeed = 0.001 * (error) * (error) + 2;
                     }
