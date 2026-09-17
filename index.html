@@ -320,28 +320,23 @@
             }
             function scrollslower() {
                 let scrollSpeed = 20; // Adjust this value to control the speed of scrolling
-                let target = window.innerHeight;
-                const totalHeight = Math.max(
-                      document.body.scrollHeight, 
-                      document.body.offsetHeight, 
-                      document.documentElement.clientHeight, 
-                      document.documentElement.scrollHeight, 
-                      document.documentElement.offsetHeight
-                    );
+                const startPos = window.scrollY;
+                const targetPos = Math.min(
+                    startPos + window.innerHeight,
+                    document.documentElement.scrollHeight - window.innerHeight
+                );
                 function scrolling() {
-                    if (window.innerHeight * 2 < totalHeight) {
-                        target = totalHeight-window.innerHeight
-                    }
-                    const error = window.innerHeight - window.scrollY;
-                    if (window.scrollY > (target * 0.9)) {
+                    const error = targetPos - window.scrollY;
+                    if (window.scrollY > (targetPos * 0.9)) {
                         scrollSpeed = 0.001 * (error) * (error) + 2;
                     }
-                    window.scrollBy(0, scrollSpeed); 
-                    const isAtBottom = (window.innerHeight + Math.ceil(window.scrollY)) >= document.documentElement.scrollHeight;
-
-                    if ((window.scrollY < window.innerHeight)) {
-                        requestAnimationFrame(scrolling);
+                    if (error < 0.5) {
+                        window.scrollTo(0, targetPos);
+                        return;
                     }
+                    window.scrollBy(0, Math.min(scrollSpeed, error)); 
+                    requestAnimationFrame(scrolling);
+
                 }
                 requestAnimationFrame(scrolling);
             }
