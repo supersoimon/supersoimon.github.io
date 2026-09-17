@@ -320,9 +320,18 @@
             }
             function scrollslower() {
                 let scrollSpeed = 20; // Adjust this value to control the speed of scrolling
+                let target = window.innerHeight;
+                const totalHeight = Math.max(
+                      document.body.scrollHeight, 
+                      document.body.offsetHeight, 
+                      document.documentelement.clientHeight, 
+                      document.documentelement.scrollHeight, 
+                      document.documentelement.offsetHeight
+                    );
                 function scrolling() {
+                    if (window.innerHeight * 2 < 
                     const error = window.innerHeight - window.scrollY;
-                    if (window.scrollY > (window.innerHeight * 0.9)) {
+                    if (window.scrollY > (target * 0.9)) {
                         scrollSpeed = 0.001 * (error) * (error) + 2;
                     }
                     window.scrollBy(0, scrollSpeed); 
