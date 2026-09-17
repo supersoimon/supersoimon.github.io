@@ -324,13 +324,14 @@
                 const totalHeight = Math.max(
                       document.body.scrollHeight, 
                       document.body.offsetHeight, 
-                      document.documentelement.clientHeight, 
-                      document.documentelement.scrollHeight, 
-                      document.documentelement.offsetHeight
+                      document.documentElement.clientHeight, 
+                      document.documentElement.scrollHeight, 
+                      document.documentElement.offsetHeight
                     );
                 function scrolling() {
-                    if (window.innerHeight * 2 < 
-                    const error = window.innerHeight - window.scrollY;
+                    if (window.innerHeight * 2 < totalHeight) {
+                        const error = window.innerHeight - window.scrollY;
+                    }
                     if (window.scrollY > (target * 0.9)) {
                         scrollSpeed = 0.001 * (error) * (error) + 2;
                     }
