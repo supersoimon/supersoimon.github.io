@@ -72,8 +72,8 @@
                 width: calc(32.5vw);
                 position: absolute;
                 transform: rotate(0deg);
-                top: calc(100vh * (-10) / 585.33);
-                right: calc(100vw * 845 / 1280);                 
+                top: calc(-10 * 100dvh / 623.33);
+                left: calc(-10 * 100dvw / 1200 );                 
             }
             .ATAT-image {
                 width: calc(35vw);
@@ -97,7 +97,7 @@
                 right: calc(100vw * 300 / 1280);                 
             }
             .FTCLogo-image {
-                width: calc(67vw);
+                height: 35%;
                 position: absolute;
                 transform: rotate(0deg);
                 top: calc(100vh * -10 / 585.33);
@@ -111,7 +111,7 @@
                 right: calc(100vw * 450 / 1280);                 
             }
             .AI-image {
-                height: calc(65vh);
+                height: 65%;
                 position: absolute;
                 transform: rotate(0deg);
                 top: calc(33.5vh);
@@ -121,8 +121,8 @@
                 width: calc(45vw);
                 position: absolute;
                 transform: rotate(0deg);
-                top: calc(100vh * 358 / 585.33 + 2.25vh);
-                right: calc(100vw * 685 / 1280);                 
+                top: calc(67vh);
+                left: calc(-10 * 100dvw / 1200 );                 
             }
             boxtext {
                 color: #232323;
@@ -205,13 +205,13 @@
             .scrollbutton {
                 position: absolute;
                 width: calc(20vw);
-                height: calc(10vh);
+                height: calc(6vw);
                 bottom: calc(100vh * 40 / 585.33);
                 left: 50%;
                 transform: translateX(-50%);
                 border-radius: calc(5vw);
                 padding: 10px 20px;
-                font-size: 16px;
+                font-size: calc(22 * 100vw / 1100);
                 background-color: #fdfbd4;
                 color: #232323;
                 border: 2px solid #232323;
@@ -225,16 +225,19 @@
                 margin: 0px 0px 0px 0px;           
             }
             .oval-container {
-                height: calc(30vh);
+                height: calc(15vw);
                 width: calc(40vw);
                 display: flex;
                 position: relative;
-                border-radius: calc(5vw);
+                border-radius: calc(2.5vw + 7.5vh);
                 background-color: #FFFFEd;
                 text-align: center;
                 align-items: center;
                 justify-content: center;
-                border: 8px solid #232323;
+                border: calc(0.5vw + 0.5vh) solid #232323;
+            }
+            .oval-container h1 {
+                font-size: calc(100 * 100vw /1200);
             }
         
         </style>
