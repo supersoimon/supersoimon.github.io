@@ -55,42 +55,42 @@
                 margin: 0px 0px 0px 30px;
             }
             .FRC-image {
-                width: calc(15vh);
+                height: calc(15vh);
                 position: absolute;
                 transform: rotate(-5deg);
                 top: calc(100vh * 240 / 585.33);
                 right: calc(100vw * 800 / 1280);               
             }
             .FRChands-image {
-                width: calc(30vh);
+                height: calc(30vh);
                 position: absolute;
                 transform: rotate(-5deg);
                 top: calc(100vh * 35 / 585.33);
                 right: calc(100vw * 600 / 1280);                 
             }
             .schematic-image {
-                width: calc(32.5vh);
+                height: calc(32.5vh);
                 position: absolute;
                 transform: rotate(0deg);
                 top: calc(-10 * 100dvh / 623.33);
                 left: calc(-10 * 100dvw / 1200 );                 
             }
             .ATAT-image {
-                width: calc(35vh);
+                height: calc(20vh);
                 position: absolute;
                 transform: rotate(-15deg);
                 top: calc(100vh * (200) / 585.33);
                 right: calc(100vw * 100 / 1280);                 
             }
             .FTC-image {
-                width: calc(25vw);
+                height: calc(25vw);
                 position: absolute;
                 transform: rotate(10deg);
                 top: calc(100vh * 190 / 585.33);
                 right: calc(100vw * 980 / 1280);                 
             }
             .Cuttlefish-image {
-                width: calc(25vh);
+                height: calc(25vh);
                 position: absolute;
                 transform: rotate(10deg);
                 top: calc(100vh * 50 / 585.33);
@@ -104,7 +104,7 @@
                 right: calc(100vw * -8 / 1280);                 
             }
             .WatchBorder-image {
-                width: calc(20vh);
+                height: calc(20vh);
                 position: absolute;
                 transform: rotate(-5deg);
                 top: calc(100vh * 280 / 585.33);
@@ -118,7 +118,7 @@
                 right: calc(100vw * -8 / 1280);                 
             }
             .keyboard-image {
-                width: calc(45vh);
+                height: calc(45vh);
                 position: absolute;
                 transform: rotate(0deg);
                 bottom: calc(1.5vh);
@@ -297,19 +297,36 @@
                 margin: 0px 0px 0px 0px;           
             }
             .oval-container {
-                height: calc(15vw);
-                width: calc(40vw);
-                display: flex;
-                position: relative;
-                border-radius: calc(2.5vw + 7.5vh);
-                background-color: #FFFFEd;
-                text-align: center;
-                align-items: center;
-                justify-content: center;
-                border: calc(0.5vw + 0.5vh) solid #232323;
-            }
-            .oval-container h1 {
-                font-size: calc(100 * 100vw /1200);
+                    height: calc(15vh);
+                    width: calc(25vh);
+                    display: flex;
+                    position: relative;
+                    border-radius: calc(2.5vw + 7.5vh);
+                    background-color: #FFFFEd;
+                    text-align: center;
+                    align-items: center;
+                    justify-content: center;
+                    border: calc(0.5vw + 0.5vh) solid #232323;
+                }
+                .oval-container h1 {
+                    font-size: calc(100 * 100vw / 2400);
+                }
+            @media (min-width = 768px) {
+                .oval-container {
+                    height: calc(15vw);
+                    width: calc(40vw);
+                    display: flex;
+                    position: relative;
+                    border-radius: calc(2.5vw + 7.5vh);
+                    background-color: #FFFFEd;
+                    text-align: center;
+                    align-items: center;
+                    justify-content: center;
+                    border: calc(0.5vw + 0.5vh) solid #232323;
+                }
+                .oval-container h1 {
+                    font-size: calc(100 * 100vw /1200);
+                }
             }
         </style>
         <title>
