@@ -249,7 +249,7 @@
             @media (max-width: 768px) {
             h2 {
                 color: #232323;
-                font-size: calc(5 * var(ht));
+                font-size: calc(5vh);
                 font-weight: bold;
                 font-family: Oswald, sans-serif;
                 margin: 0px 30px 10px 30px;
@@ -262,45 +262,45 @@
                 margin: 0px 0px 0px 30px;
             }
             .FRC-image {
-                height: calc(30height);
+                height: calc(30vh);
                 position: absolute;
                 transform: rotate(-10deg);
                 top: calc(100vh * 270 / 585.33);
                 right: calc(100vw * -100 / 1280);               
             }
             .FRChands-image {
-                height: calc(25 * var(ht));
+                height: calc(25vh);
                 position: absolute;
                 transform: rotate(-5deg);
-                top: calc(100 * var(ht) * 135 / 585.33);
+                top: calc(100vh * 135 / 585.33);
                 right: calc(100vw * 600 / 1280);                 
             }
             .schematic-image {
-                height: calc(32.5 * var(ht));
+                height: calc(32.5vh);
                 position: absolute;
                 transform: rotate(0deg);
-                top: calc(-10 * 100d * var(ht) / 623.33);
+                top: calc(-10 * 100dvh / 623.33);
                 left: calc(-25 * 100dvw / 1200 );                 
             }
             .ATAT-image {
-                height: calc(25 * var(ht));
+                height: calc(25vh);
                 position: absolute;
                 transform: rotate(-15deg);
-                top: calc(100 * var(ht) * (200) / 585.33);
+                top: calc(100vh * (200) / 585.33);
                 right: calc(100vw * -125 / 1280);                 
             }
             .FTC-image {
-                height: calc(30 * var(ht));
+                height: calc(30vh);
                 position: absolute;
                 transform: rotate(10deg);
-                top: calc(100 * var(ht) * 250 / 585.33);
+                top: calc(100vh * 250 / 585.33);
                 right: calc(100vw * 800 / 1280);                 
             }
             .Cuttlefish-image {
-                height: calc(20 * var(ht));
+                height: calc(20vh);
                 position: absolute;
                 transform: rotate(5deg);
-                top: calc(100 * var(ht) * 100 / 585.33);
+                top: calc(100vh * 100 / 585.33);
                 right: calc(100vw * 200 / 1280);                 
             }
             .FTCLogo-image {
@@ -311,10 +311,10 @@
                 right: calc(100vw * -25 / 1000);                 
             }
             .WatchBorder-image {
-                height: calc(25 * var(ht));
+                height: calc(25vh);
                 position: absolute;
                 transform: rotate(-5deg);
-                top: calc(100 * var(ht) * 300 / 585.33);
+                top: calc(100vh * 300 / 585.33);
                 right: calc(100vw * 400 / 1280);                 
             }
             .AI-image {
@@ -329,7 +329,7 @@
                 height: auto;
                 position: absolute;
                 transform: rotate(0deg);
-                bottom: calc(1.25 * var(ht));
+                bottom: calc(1.25vh);
                 left: calc(-25 * 100dvw / 1200 );                 
             }
            
@@ -406,7 +406,7 @@
                 display: flex;
                 background-color: #ffffed;
                 color: #232323;
-                height: calc(100 * var(ht));
+                height: calc(100vh);
                 text-align: center;
                 align-items: center;
                 justify-content: center;
@@ -414,14 +414,14 @@
             }
             .scrollbutton {
                 position: absolute;
-                width: calc(20 * var(ht));
-                height: calc(6 * var(ht));
-                bottom: calc(100 * var(ht) * 40 / 585.33);
+                width: calc(20vh);
+                height: calc(6vh);
+                bottom: calc(100vh * 40 / 585.33);
                 left: 50%;
                 transform: translateX(-50%);
                 border-radius: calc(5vw);
                 padding: 10px 20px;
-                font-size: calc(22 * 100 * var(ht) / 1100);
+                font-size: calc(22 * 100vh / 1100);
                 background-color: #fdfbd4;
                 color: #232323;
                 border: 2px solid #232323;
@@ -429,22 +429,22 @@
             }
             .top-box h1 {
                 color: #232323;
-                font-size: calc(100 * 100 * var(ht) / 585.33);
+                font-size: calc(100 * 100vh / 585.33);
                 font-weight: bold;
                 font-family: Amatic SC, sans-serif;
                 margin: 0px 0px 0px 0px;           
             }
             .oval-container {
-                    height: calc(15 * var(ht));
-                    width: calc(35 * var(ht));
+                    height: calc(15vh);
+                    width: calc(35vh);
                     display: flex;
                     position: relative;
-                    border-radius: calc(1.5vw + 1.5 * var(ht));
+                    border-radius: calc(1.5vw + 1.5vh);
                     background-color: #FFFFEd;
                     text-align: center;
                     align-items: center;
                     justify-content: center;
-                    border: calc(0.5vw + 0.5 * var(ht)) solid #232323;
+                    border: calc(0.5vw + 0.5vh) solid #232323;
                 }
                 .oval-container h1 {
                     font-size: calc(100 * 100vw / 800);
@@ -560,11 +560,6 @@
                 }
                 requestAnimationFrame(scrolling);
             }
-            function setFixedVH() { 
-                let ht = window.innerHeight * 0.01; 
-                document.documentElement.style.setProperty('ht', `${ht}px`); 
-            } 
-            setFixedVH();
         </script>
     </body>
 </html>
