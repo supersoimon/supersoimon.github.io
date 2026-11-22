@@ -4,395 +4,319 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CORDIC Accelerator | Documentation</title>
+<title>CORDIC Accelerator — Development Journal</title>
 
 <style>
-:root {
-    --bg: #0d1117;
-    --sidebar: #010409;
-    --surface: #161b22;
-    --border: #30363d;
-    --text: #e6edf3;
-    --muted: #8b949e;
-    --accent: #58a6ff;
-    --green: #3fb950;
-}
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
-                 sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.7;
-}
-
-/* Sidebar */
-
-.sidebar {
-    width: 250px;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background: var(--sidebar);
-    border-right: 1px solid var(--border);
-    padding: 30px 22px;
-    overflow-y: auto;
-}
-
-.logo {
-    font-size: 19px;
-    font-weight: 700;
-    margin-bottom: 5px;
-}
-
-.logo span {
-    color: var(--accent);
-}
-
-.subtitle {
-    color: var(--muted);
-    font-size: 12px;
-    margin-bottom: 35px;
-}
-
-.nav-heading {
-    color: var(--muted);
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin: 24px 0 10px;
-}
-
-.sidebar a {
-    display: block;
-    color: var(--muted);
-    text-decoration: none;
-    font-size: 14px;
-    padding: 7px 10px;
-    border-radius: 6px;
-    margin: 2px 0;
-}
-
-.sidebar a:hover {
-    color: var(--text);
-    background: var(--surface);
-}
-
-/* Main content */
-
-main {
-    margin-left: 250px;
-    max-width: 1050px;
-    padding: 65px 75px;
-}
-
-.tag {
-    color: var(--green);
-    font-size: 12px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-h1 {
-    font-size: 42px;
-    margin: 12px 0;
-    letter-spacing: -1px;
-}
-
-h2 {
-    font-size: 25px;
-    margin: 45px 0 15px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--border);
-}
-
-h3 {
-    font-size: 17px;
-    margin: 25px 0 10px;
-}
-
-p {
-    color: var(--muted);
-    margin: 12px 0;
-}
-
-a {
-    color: var(--accent);
-}
-
-.hero {
-    padding: 35px 0 45px;
-}
-
-.hero p {
-    font-size: 17px;
-    max-width: 650px;
-}
-
-.info-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-    margin: 30px 0;
-}
-
-.info-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 18px;
-}
-
-.info-card strong {
-    display: block;
-    font-size: 14px;
-    margin-bottom: 5px;
-}
-
-.info-card span {
-    font-size: 13px;
-    color: var(--muted);
-}
-
-/* Code blocks */
-
-pre {
-    background: #010409;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 20px;
-    overflow-x: auto;
-    margin: 15px 0;
-}
-
-code {
-    font-family: "Consolas", "Courier New", monospace;
-    font-size: 13px;
-    color: #79c0ff;
-}
-
-/* Tables */
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-    font-size: 14px;
-}
-
-th, td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid var(--border);
-}
-
-th {
-    color: var(--text);
-}
-
-td {
-    color: var(--muted);
-}
-
-/* Lists */
-
-ul {
-    margin: 12px 0 12px 25px;
-    color: var(--muted);
-}
-
-li {
-    margin: 6px 0;
-}
-
-/* Timeline */
-
-.timeline {
-    border-left: 2px solid var(--border);
-    margin: 25px 0;
-    padding-left: 25px;
-}
-
-.timeline-item {
-    margin-bottom: 25px;
-    position: relative;
-}
-
-.timeline-item::before {
-    content: "";
-    width: 10px;
-    height: 10px;
-    background: var(--accent);
-    border-radius: 50%;
-    position: absolute;
-    left: -31px;
-    top: 9px;
-}
-
-.timeline-item strong {
-    display: block;
-}
-
-/* Footer */
-
-footer {
-    margin-top: 80px;
-    padding-top: 20px;
-    border-top: 1px solid var(--border);
-    color: var(--muted);
-    font-size: 12px;
-}
-
-/* Mobile */
-
-@media(max-width: 800px) {
-    .sidebar {
-        display: none;
+    * {
+        box-sizing: border-box;
     }
+
+    body {
+        margin: 0;
+        background: #ffffff;
+        color: #242424;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 15px;
+        line-height: 1.7;
+    }
+
+    /* Navigation */
+
+    nav {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 245px;
+        height: 100vh;
+        padding: 35px 25px;
+        border-right: 1px solid #e5e5e5;
+        background: #ffffff;
+    }
+
+    nav h2 {
+        font-size: 17px;
+        font-weight: 600;
+        margin: 0 0 5px;
+    }
+
+    nav p {
+        color: #777;
+        font-size: 13px;
+        margin: 0 0 35px;
+    }
+
+    nav a {
+        display: block;
+        text-decoration: none;
+        color: #555;
+        font-size: 14px;
+        padding: 5px 0;
+    }
+
+    nav a:hover {
+        color: #000;
+        text-decoration: underline;
+    }
+
+    .nav-label {
+        font-size: 12px;
+        font-weight: 600;
+        color: #888;
+        margin: 25px 0 8px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    /* Main document */
 
     main {
-        margin-left: 0;
-        padding: 35px 22px;
-    }
-
-    .info-grid {
-        grid-template-columns: 1fr;
+        max-width: 850px;
+        margin-left: 245px;
+        padding: 55px 75px 100px;
     }
 
     h1 {
         font-size: 32px;
+        font-weight: 600;
+        letter-spacing: -0.5px;
+        margin: 0 0 8px;
     }
-}
+
+    .description {
+        color: #666;
+        font-size: 16px;
+        margin-bottom: 35px;
+    }
+
+    h2 {
+        font-size: 23px;
+        font-weight: 600;
+        margin-top: 48px;
+        margin-bottom: 15px;
+    }
+
+    h3 {
+        font-size: 17px;
+        font-weight: 600;
+        margin-top: 28px;
+        margin-bottom: 8px;
+    }
+
+    p {
+        margin: 12px 0;
+    }
+
+    ul {
+        padding-left: 25px;
+    }
+
+    li {
+        margin: 5px 0;
+    }
+
+    a {
+        color: #1769aa;
+    }
+
+    hr {
+        border: none;
+        border-top: 1px solid #e5e5e5;
+        margin: 35px 0;
+    }
+
+    /* Code */
+
+    pre {
+        background: #f6f6f6;
+        border: 1px solid #e5e5e5;
+        border-radius: 3px;
+        padding: 16px;
+        overflow-x: auto;
+        font-size: 13px;
+        line-height: 1.6;
+    }
+
+    code {
+        font-family: Consolas, "Courier New", monospace;
+    }
+
+    p code, li code {
+        background: #f2f2f2;
+        padding: 2px 5px;
+        border-radius: 3px;
+        font-size: 13px;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 20px 0;
+    }
+
+    th, td {
+        text-align: left;
+        padding: 10px;
+        border-bottom: 1px solid #e5e5e5;
+    }
+
+    th {
+        font-weight: 600;
+    }
+
+    .date {
+        color: #777;
+        font-size: 13px;
+    }
+
+    footer {
+        margin-top: 70px;
+        padding-top: 20px;
+        border-top: 1px solid #e5e5e5;
+        color: #888;
+        font-size: 13px;
+    }
+
+    @media (max-width: 750px) {
+        nav {
+            position: relative;
+            width: 100%;
+            height: auto;
+            border-right: none;
+            border-bottom: 1px solid #e5e5e5;
+            padding: 20px;
+        }
+
+        nav p {
+            margin-bottom: 15px;
+        }
+
+        main {
+            margin: 0;
+            padding: 30px 22px;
+        }
+    }
 </style>
 </head>
 
 <body>
 
-<!-- SIDEBAR -->
+<nav>
+    <h2>CORDIC Accelerator</h2>
+    <p>Development Journal</p>
 
-<nav class="sidebar">
-
-    <div class="logo">CORDIC<span>.</span></div>
-    <div class="subtitle">Hardware Development Journal</div>
-
-    <div class="nav-heading">Documentation</div>
+    <div class="nav-label">Documentation</div>
     <a href="#overview">Overview</a>
+    <a href="#background">Background</a>
     <a href="#architecture">Architecture</a>
-    <a href="#interface">Hardware Interface</a>
-
-    <div class="nav-heading">Development</div>
     <a href="#implementation">Implementation</a>
-    <a href="#testing">Simulation & Testing</a>
-    <a href="#progress">Development Log</a>
+    <a href="#interface">Hardware Interface</a>
+    <a href="#testing">Testing</a>
 
-    <div class="nav-heading">Resources</div>
-    <a href="#repository">Source Code</a>
-
+    <div class="nav-label">Development</div>
+    <a href="#journal">Development Log</a>
+    <a href="#future">Future Work</a>
+    <a href="#source">Source Code</a>
 </nav>
-
-
-<!-- MAIN CONTENT -->
 
 <main>
 
-    <section class="hero" id="overview">
-
-        <div class="tag">Hardware Engineering Project</div>
-
+    <section id="overview">
         <h1>CORDIC Accelerator</h1>
-
-        <p>
-            A custom hardware accelerator implementing the
-            Coordinate Rotation Digital Computer (CORDIC)
-            algorithm using Verilog HDL.
+        <p class="description">
+            Hardware implementation of the Coordinate Rotation
+            Digital Computer algorithm using Verilog.
         </p>
 
-        <div class="info-grid">
+        <p>
+            This project explores the implementation of a mathematical
+            accelerator in digital hardware. The objective is to design,
+            simulate, and eventually fabricate a custom CORDIC
+            accelerator using the Tiny Tapeout platform.
+        </p>
 
-            <div class="info-card">
-                <strong>Language</strong>
-                <span>Verilog HDL</span>
-            </div>
-
-            <div class="info-card">
-                <strong>Architecture</strong>
-                <span>Iterative CORDIC</span>
-            </div>
-
-            <div class="info-card">
-                <strong>Platform</strong>
-                <span>Tiny Tapeout</span>
-            </div>
-
-        </div>
-
+        <p>
+            The project is written in Verilog HDL and uses an iterative
+            architecture to perform vector rotations through a
+            sequence of additions, subtractions, and bit shifts.
+        </p>
     </section>
 
+    <hr>
 
-    <!-- ARCHITECTURE -->
+    <section id="background">
+        <h2>Background</h2>
+
+        <p>
+            The Coordinate Rotation Digital Computer (CORDIC) algorithm
+            is a method of performing mathematical operations using
+            relatively simple hardware. Rather than relying on
+            multiplication or complex arithmetic units, CORDIC
+            performs calculations through repeated shifts and additions.
+        </p>
+
+        <p>
+            This makes it particularly useful for hardware applications
+            where minimizing resource utilization is important.
+        </p>
+    </section>
 
     <section id="architecture">
-
-        <h2>01. Architecture</h2>
-
-        <p>
-            CORDIC is an iterative mathematical algorithm
-            that uses additions, subtractions, and bit shifts
-            to perform operations such as trigonometric
-            calculations.
-        </p>
-
-        <h3>Rotation Mode</h3>
+        <h2>Architecture</h2>
 
         <p>
-            The accelerator uses successive iterations to
-            rotate an initial vector towards a target angle.
-            Each iteration adjusts the vector and reduces
-            the remaining angular error.
+            The accelerator implements CORDIC in rotation mode.
+            An input vector is progressively rotated through a series
+            of iterations, with each iteration applying a smaller
+            angular adjustment.
         </p>
+
+        <h3>Iteration equations</h3>
 
         <pre><code>x_next = x - (y >>> i)
 y_next = y + (x >>> i)
 z_next = z - atan(2^-i)</code></pre>
 
-        <h3>Hardware Components</h3>
-
-        <ul>
-            <li>Rotation module</li>
-            <li>Angle lookup table</li>
-            <li>Control logic</li>
-            <li>Iteration counter</li>
-            <li>Input/output interface</li>
-        </ul>
-
-    </section>
-
-
-    <!-- INTERFACE -->
-
-    <section id="interface">
-
-        <h2>02. Hardware Interface</h2>
-
         <p>
-            The top-level module manages communication
-            between the external interface and the internal
-            CORDIC implementation.
+            Each iteration updates the vector coordinates and
+            the remaining angular displacement. The angle values
+            are retrieved from a lookup table.
         </p>
 
-        <h3>Top-Level Signals</h3>
+        <h3>Module structure</h3>
+
+        <p>The design is separated into three primary modules:</p>
+
+        <ul>
+            <li><code>top.v</code> — top-level module and control interface.</li>
+            <li><code>rotation.v</code> — iterative CORDIC computation.</li>
+            <li><code>anglelookup.v</code> — lookup table for iteration angles.</li>
+        </ul>
+    </section>
+
+    <section id="implementation">
+        <h2>Implementation</h2>
+
+        <p>
+            The RTL is implemented using sequential Verilog.
+            A clock-driven process manages the iteration counter
+            and updates the vector coordinates at each clock cycle.
+        </p>
+
+        <p>
+            The design uses signed fixed-point arithmetic to
+            represent the vector coordinates and angular values.
+            Arithmetic right shifts are used to perform the
+            divisions required by each iteration.
+        </p>
+    </section>
+
+    <section id="interface">
+        <h2>Hardware Interface</h2>
+
+        <p>
+            The top-level design exposes an interface for
+            controlling the accelerator and retrieving its results.
+        </p>
 
         <table>
             <tr>
@@ -400,104 +324,51 @@ z_next = z - atan(2^-i)</code></pre>
                 <th>Direction</th>
                 <th>Description</th>
             </tr>
-
             <tr>
                 <td>clk</td>
                 <td>Input</td>
                 <td>System clock</td>
             </tr>
-
             <tr>
                 <td>rst_n</td>
                 <td>Input</td>
                 <td>Active-low reset</td>
             </tr>
-
             <tr>
                 <td>start</td>
                 <td>Input</td>
-                <td>Starts computation</td>
+                <td>Begins computation</td>
             </tr>
-
             <tr>
                 <td>x_pos</td>
                 <td>Output</td>
                 <td>Final X coordinate</td>
             </tr>
-
             <tr>
                 <td>y_pos</td>
                 <td>Output</td>
                 <td>Final Y coordinate</td>
             </tr>
-
             <tr>
                 <td>step</td>
                 <td>Output</td>
                 <td>Current iteration</td>
             </tr>
-
             <tr>
                 <td>busy</td>
                 <td>Output</td>
-                <td>Indicates active computation</td>
+                <td>Computation status</td>
             </tr>
         </table>
-
     </section>
-
-
-    <!-- IMPLEMENTATION -->
-
-    <section id="implementation">
-
-        <h2>03. Implementation</h2>
-
-        <p>
-            The accelerator is implemented using modular
-            Verilog design, separating the computational
-            logic from the control and lookup logic.
-        </p>
-
-        <h3>Project Structure</h3>
-
-        <pre><code>CORDIC/
-│
-├── RTL/
-│   ├── top.v
-│   ├── rotation.v
-│   └── anglelookup.v
-│
-├── testbench/
-│   └── rotation_tb.v
-│
-├── docs/
-│
-└── README.md</code></pre>
-
-        <h3>Design Considerations</h3>
-
-        <ul>
-            <li>Fixed-point arithmetic</li>
-            <li>Signed binary representation</li>
-            <li>Sequential iteration logic</li>
-            <li>Clock synchronization</li>
-            <li>Hardware resource utilization</li>
-        </ul>
-
-    </section>
-
-
-    <!-- TESTING -->
 
     <section id="testing">
-
-        <h2>04. Simulation & Testing</h2>
+        <h2>Testing</h2>
 
         <p>
-            Before hardware fabrication, the RTL design
-            is validated through simulation using Icarus
-            Verilog.
+            The RTL is tested using Icarus Verilog.
+            A testbench provides input signals, controls the
+            clock and reset, and monitors the accelerator's outputs.
         </p>
 
         <h3>Compilation</h3>
@@ -508,98 +379,71 @@ RTL/rotation.v \
 RTL/anglelookup.v \
 testbench/rotation_tb.v</code></pre>
 
-        <h3>Run Simulation</h3>
+        <h3>Simulation</h3>
 
         <pre><code>vvp rotation_sim</code></pre>
 
-        <h3>Testing Objectives</h3>
-
-        <ul>
-            <li>Verify correct rotation calculations</li>
-            <li>Validate signed arithmetic</li>
-            <li>Check reset functionality</li>
-            <li>Verify iteration completion</li>
-            <li>Test busy and start signals</li>
-        </ul>
-
+        <p>
+            Testing focuses on verifying the mathematical output,
+            correct iteration sequencing, reset behavior, and
+            completion signaling.
+        </p>
     </section>
 
+    <section id="journal">
+        <h2>Development Log</h2>
 
-    <!-- DEVELOPMENT LOG -->
-
-    <section id="progress">
-
-        <h2>05. Development Log</h2>
-
+        <h3>Project initialization</h3>
+        <p class="date">November 2026</p>
         <p>
-            A chronological record of the project's
-            development, design decisions, and milestones.
+            Initial research into CORDIC and its potential
+            implementation as a hardware accelerator.
         </p>
 
-        <div class="timeline">
+        <h3>RTL development</h3>
+        <p class="date">November 2026</p>
+        <p>
+            Developed the initial rotation module, angle lookup
+            table, and top-level module.
+        </p>
 
-            <div class="timeline-item">
-                <strong>Project Initialization</strong>
-                <p>
-                    Established the project scope and began
-                    researching the CORDIC algorithm.
-                </p>
-            </div>
-
-            <div class="timeline-item">
-                <strong>RTL Development</strong>
-                <p>
-                    Developed the initial Verilog modules
-                    for the rotation algorithm and angle lookup.
-                </p>
-            </div>
-
-            <div class="timeline-item">
-                <strong>Testbench Development</strong>
-                <p>
-                    Created a simulation environment to
-                    validate the rotation module.
-                </p>
-            </div>
-
-            <div class="timeline-item">
-                <strong>Current Development</strong>
-                <p>
-                    Working on verification, integration,
-                    and hardware interface configuration.
-                </p>
-            </div>
-
-        </div>
-
+        <h3>Simulation development</h3>
+        <p class="date">November 2026</p>
+        <p>
+            Created a Verilog testbench and began validating
+            the rotation module using Icarus Verilog.
+        </p>
     </section>
 
+    <section id="future">
+        <h2>Future Work</h2>
 
-    <!-- REPOSITORY -->
+        <ul>
+            <li>Complete RTL verification.</li>
+            <li>Integrate the design with the Tiny Tapeout interface.</li>
+            <li>Evaluate synthesis results and hardware utilization.</li>
+            <li>Submit the design for fabrication.</li>
+            <li>Evaluate the fabricated accelerator.</li>
+        </ul>
+    </section>
 
-    <section id="repository">
-
-        <h2>06. Source Code</h2>
+    <section id="source">
+        <h2>Source Code</h2>
 
         <p>
-            The complete project source code, including
-            RTL modules, simulation files, and documentation,
-            is maintained in the project repository.
+            Source code and project files are maintained in the
+            project's GitHub repository.
         </p>
 
         <p>
             <a href="https://github.com/" target="_blank">
-                View GitHub Repository →
+                GitHub Repository
             </a>
         </p>
-
     </section>
 
-
     <footer>
-        CORDIC Accelerator · Hardware Development Journal
-        <br>
-        Built with HTML & CSS
+        CORDIC Accelerator — Development Journal
     </footer>
 
 </main>
