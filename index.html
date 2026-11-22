@@ -1,563 +1,608 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta charset="UTF-8">
-    <style>
-            @import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@300;400;600;700&display=swap');
-            html::-webkit-scrollbar {
-              display: none;
-            }
-            html {
-              scrollbar-width: none;
-              -ms-overflow-style: none;
-            }
-            body {
-                background-color: #FFFFEd;
-                font-family: Amatic SC, sans-serif;
-            }
-            h1 {
-                color: #232323;
-                font-size: 50px;
-                font-weight: bold;
-                font-family: Amatic SC, sans-serif;
-                margin: 30px 30px 10px 30px;
-            }
-            
-            
-            h3 {
-                color: #232323;
-                font-size: 20px;
-                font-weight: bold;
-                font-family: Oswald, sans-serif;
-                margin: 0px 0px 0px 0px;
-            }
-            p {
-                color: #232323;
-                font-size: 15px;
-                font-family: Oswald, sans-serif;
-                margin: 5px 30px 0px 30px;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CORDIC Accelerator | Documentation</title>
 
-            }
-            img {
-                height: auto;
-            }
-            @media (min-width: 768px) {
-                h2 {
-                color: #232323;
-                font-size: 30px;
-                font-weight: bold;
-                font-family: Oswald, sans-serif;
-                margin: 0px 30px 10px 30px;
-            }
-            .project-image {
-                width: 100%;
-            }
-            .front-image {
-                width: calc(100vw - 120px);
-                margin: 0px 0px 0px 30px;
-            }
-            .FRC-image {
-                width: calc(15vw);
-                position: absolute;
-                transform: rotate(-5deg);
-                top: calc(100vh * 240 / 585.33);
-                right: calc(100vw * 800 / 1280);               
-            }
-            .FRChands-image {
-                width: calc(30vw);
-                position: absolute;
-                transform: rotate(-5deg);
-                top: calc(100vh * 35 / 585.33);
-                right: calc(100vw * 600 / 1280);                 
-            }
-            .schematic-image {
-                width: calc(32.5vw);
-                position: absolute;
-                transform: rotate(0deg);
-                top: calc(-10 * 100dvh / 623.33);
-                left: calc(-10 * 100dvw / 1200 );                 
-            }
-            .ATAT-image {
-                width: calc(20vh);
-                position: absolute;
-                transform: rotate(-15deg);
-                top: calc(100vh * (200) / 585.33);
-                right: calc(100vw * 100 / 1280);                 
-            }
-            .FTC-image {
-                width: calc(25vw);
-                position: absolute;
-                transform: rotate(10deg);
-                top: calc(100vh * 190 / 585.33);
-                right: calc(100vw * 980 / 1280);                 
-            }
-            .Cuttlefish-image {
-                width: calc(25vw);
-                position: absolute;
-                transform: rotate(10deg);
-                top: calc(100vh * 50 / 585.33);
-                right: calc(100vw * 300 / 1280);                 
-            }
-            .FTCLogo-image {
-                height: calc(35vh);
-                position: absolute;
-                transform: rotate(0deg);
-                top: calc(100vh * -10 / 585.33);
-                right: calc(100vw * -8 / 1280);                 
-            }
-            .WatchBorder-image {
-                width: calc(20vw);
-                position: absolute;
-                transform: rotate(-5deg);
-                top: calc(100vh * 280 / 585.33);
-                right: calc(100vw * 450 / 1280);                 
-            }
-            .AI-image {
-                height: 65%;
-                position: absolute;
-                transform: rotate(0deg);
-                top: calc(33.5vh);
-                right: calc(100vw * -8 / 1280);                 
-            }
-            .keyboard-image {
-                width: calc(45vw);
-                height: auto;
-                position: absolute;
-                transform: rotate(0deg);
-                bottom: calc(1.5vh);
-                left: calc(-10 * 100dvw / 1200 );                 
-            }
-           
-            boxtext {
-                color: #232323;
-                font-size: 15px;
-                font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-                margin: 10px 0px 0px 0px;
+<style>
+:root {
+    --bg: #0d1117;
+    --sidebar: #010409;
+    --surface: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --accent: #58a6ff;
+    --green: #3fb950;
+}
 
-            }
-            a {
-                color: #232323;
-                font-weight: bold;
-                text-decoration: none;
-            }
-            .box-container {
-                display: flex;
-                gap: 30px;
-                margin: 10px 30px 20px 30px;
-            }
-            .box {
-                flex: 1;
-                background-color: #fdfbd4;
-                color: #232323;
-                border: 4px solid #232323;
-                padding: 10px;
-                height: calc(0.12114 * 100vw + 64px) + 20px;
-                text-align: left;
-            }
-            .socials {
-                margin: 10px 30px 10px 30px;
-                background-color: #fdfbd4;
-                border: 4px solid #232323;
-                width: calc(100vw - 90px);
-                height: 20px;
-                padding: 10px;
-            }
-            .aboutme {
-                margin: 20px 30px 20px 30px;
-                background-color: #fdfbd4;
-                border: 4px solid #232323;
-                width: calc(100vw - 104px);
-                height: 60px;
-                padding: 10px;
-                max-width: 100%;
-            }
-            .socials {
-                margin: 10px 30px 10px 30px;
-                background-color: #fdfbd4;
-                border: 4px solid #232323;
-                width: calc(100vw - 104px);
-                height: 20px;
-                padding: 10px;
-                max-width: 100%;
-            }
-            .socials h2 {
-                color: #232323;
-                font-size: 30px;
-                font-weight: bold;
-                font-family: Oswald, sans-serif;
-                margin: 0px 30px 0px 30px;           
-            }
-            .socials h1 {
-                color: #232323;
-                font-size: 20px;
-                font-weight: bold;
-                font-family: Oswald, sans-serif;
-                margin: 20px 30px 0px 30px;           
-            }
-           
-            .top-box {
-                position: relative;
-                display: flex;
-                background-color: #ffffed;
-                color: #232323;
-                height: calc(100vh);
-                text-align: center;
-                align-items: center;
-                justify-content: center;
-                margin: 0px 0px 20px 0px;
-            }
-            .scrollbutton {
-                position: absolute;
-                width: calc(20vw);
-                height: calc(6vw);
-                bottom: calc(100vh * 40 / 585.33);
-                left: 50%;
-                transform: translateX(-50%);
-                border-radius: calc(5vw);
-                padding: 10px 20px;
-                font-size: calc(22 * 100vw / 1100);
-                background-color: #fdfbd4;
-                color: #232323;
-                border: 2px solid #232323;
-                cursor: pointer;
-            }
-            .top-box h1 {
-                color: #232323;
-                font-size: calc(100 * 100vh / 585.33);
-                font-weight: bold;
-                font-family: Amatic SC, sans-serif;
-                margin: 0px 0px 0px 0px;           
-            }
-            .oval-container {
-                    height: calc(25vh);
-                    width: calc(70vh);
-                    display: flex;
-                    position: relative;
-                    border-radius: calc(2.5vw + 7.5vh);
-                    background-color: #FFFFEd;
-                    text-align: center;
-                    align-items: center;
-                    justify-content: center;
-                    border: calc(0.5vw + 0.5vh) solid #232323;
-                }
-                .oval-container h1 {
-                    font-size: calc(100 * 100vh / 600);
-                }
-            }
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-            @media (max-width: 768px) {
-            h2 {
-                color: #232323;
-                font-size: calc(5vh);
-                font-weight: bold;
-                font-family: Oswald, sans-serif;
-                margin: 0px 30px 10px 30px;
-            }
-            .project-image {
-                width: 100%;
-            }
-            .front-image {
-                width: calc(100vw - 120px);
-                margin: 0px 0px 0px 30px;
-            }
-            .FRC-image {
-                height: calc(30vh);
-                position: absolute;
-                transform: rotate(-10deg);
-                top: calc(100vh * 270 / 585.33);
-                right: calc(100vw * -100 / 1280);               
-            }
-            .FRChands-image {
-                height: calc(25vh);
-                position: absolute;
-                transform: rotate(-5deg);
-                top: calc(100vh * 135 / 585.33);
-                right: calc(100vw * 600 / 1280);                 
-            }
-            .schematic-image {
-                height: calc(32.5vh);
-                position: absolute;
-                transform: rotate(0deg);
-                top: calc(-10 * 100dvh / 623.33);
-                left: calc(-25 * 100dvw / 1200 );                 
-            }
-            .ATAT-image {
-                height: calc(25vh);
-                position: absolute;
-                transform: rotate(-15deg);
-                top: calc(100vh * (200) / 585.33);
-                right: calc(100vw * -125 / 1280);                 
-            }
-            .FTC-image {
-                height: calc(30vh);
-                position: absolute;
-                transform: rotate(10deg);
-                top: calc(100vh * 250 / 585.33);
-                right: calc(100vw * 800 / 1280);                 
-            }
-            .Cuttlefish-image {
-                height: calc(20vh);
-                position: absolute;
-                transform: rotate(5deg);
-                top: calc(100vh * 100 / 585.33);
-                right: calc(100vw * 200 / 1280);                 
-            }
-            .FTCLogo-image {
-                height: 36%;
-                position: absolute;
-                transform: rotate(0deg);
-                top: calc(-5*10vw/15);
-                right: calc(100vw * -25 / 1000);                 
-            }
-            .WatchBorder-image {
-                height: calc(25vh);
-                position: absolute;
-                transform: rotate(-5deg);
-                top: calc(100vh * 300 / 585.33);
-                right: calc(100vw * 400 / 1280);                 
-            }
-            .AI-image {
-                height: 40%;
-                position: absolute;
-                transform: rotate(0deg);
-                bottom: calc(35vw); 
-                right: calc(-25 * 10vw / 100);   
-            }
-            .keyboard-image {
-                width: calc(100vw);
-                height: auto;
-                position: absolute;
-                transform: rotate(0deg);
-                bottom: calc(1.25vh);
-                left: calc(-25 * 100dvw / 1200 );                 
-            }
-           
-            boxtext {
-                color: #232323;
-                font-size: 15px;
-                font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-                margin: 10px 0px 0px 0px;
+html {
+    scroll-behavior: smooth;
+}
 
-            }
-            a {
-                color: #232323;
-                font-weight: bold;
-                text-decoration: none;
-            }
-            .box-container {
-                display: flex;
-                gap: 30px;
-                margin: 10px 30px 20px 30px;
-                flex-direction: column;
-            }
-            .box {
-                flex: 1;
-                background-color: #fdfbd4;
-                color: #232323;
-                border: 4px solid #232323;
-                padding: 10px;
-                height: calc(0.12114 * 100vw + 64px) + 20px;
-                text-align: left;
-            }
-            .socials {
-                margin: 10px 30px 10px 30px;
-                background-color: #fdfbd4;
-                border: 4px solid #232323;
-                width: calc(100vw - 90px);
-                height: 20px;
-                padding: 10px;
-            }
-            .aboutme {
-                margin: 20px 30px 20px 30px;
-                background-color: #fdfbd4;
-                border: 4px solid #232323;
-                width: calc(100vw - 104px);
-                height: calc(1/25vw);
-                padding: 10px;
-                max-width: 100%;
-            }
-            .socials {
-                margin: 10px 30px 10px 30px;
-                background-color: #fdfbd4;
-                border: 4px solid #232323;
-                width: calc(100vw - 104px);
-                height: 20px;
-                padding: 10px;
-                max-width: 100%;
-            }
-            .socials h2 {
-                color: #232323;
-                font-size: 30px;
-                font-weight: bold;
-                font-family: Oswald, sans-serif;
-                margin: 0px 30px 0px 30px;           
-            }
-            .socials h1 {
-                color: #232323;
-                font-size: 20px;
-                font-weight: bold;
-                font-family: Oswald, sans-serif;
-                margin: 20px 30px 0px 30px;           
-            }
-           
-            .top-box {
-                position: relative;
-                display: flex;
-                background-color: #ffffed;
-                color: #232323;
-                height: calc(100vh);
-                text-align: center;
-                align-items: center;
-                justify-content: center;
-                margin: 0px 0px 20px 0px;
-            }
-            .scrollbutton {
-                position: absolute;
-                width: calc(20vh);
-                height: calc(6vh);
-                bottom: calc(100vh * 40 / 585.33);
-                left: 50%;
-                transform: translateX(-50%);
-                border-radius: calc(5vw);
-                padding: 10px 20px;
-                font-size: calc(22 * 100vh / 1100);
-                background-color: #fdfbd4;
-                color: #232323;
-                border: 2px solid #232323;
-                cursor: pointer;
-            }
-            .top-box h1 {
-                color: #232323;
-                font-size: calc(100 * 100vh / 585.33);
-                font-weight: bold;
-                font-family: Amatic SC, sans-serif;
-                margin: 0px 0px 0px 0px;           
-            }
-            .oval-container {
-                    height: calc(15vh);
-                    width: calc(35vh);
-                    display: flex;
-                    position: relative;
-                    border-radius: calc(1.5vw + 1.5vh);
-                    background-color: #FFFFEd;
-                    text-align: center;
-                    align-items: center;
-                    justify-content: center;
-                    border: calc(0.5vw + 0.5vh) solid #232323;
-                }
-                .oval-container h1 {
-                    font-size: calc(100 * 100vw / 800);
-                }
-            }
-        </style>
-        <title>
-            Simon Gidrewicz
-        </title>
-    </head>
-    <body>
-         <div class="top-box">
-            <img src="IMAGES/AI.png" class="AI-image" alt="AI Image">
-            <img src="IMAGES/FTCLogo.png" class="FTCLogo-image" alt="FTC Logo Image">
-            <img src="IMAGES/KeyboardWBorder.png" class="keyboard-image" alt="80% Keyboard Image">
-            <img src="IMAGES/Schematic.png" class="schematic-image" alt="schematic Image">
-            <img src="IMAGES/FTC.png" class="FTC-image" alt="FTC Robot Image">
-            <img src="IMAGES/CuttlefishLogo.png" class="Cuttlefish-image" alt="Cuttlefish Logo">
-            <img src="IMAGES/FRCHands.png" class="FRChands-image" alt="FRC Robot Image">
-            <img src="IMAGES/FRC.png" class="FRC-image" alt="FRC Robot Image">
-            <img src="IMAGES/AT-AT.png" class="ATAT-image" alt="ATAT Image">
-            <img src="IMAGES/WatchBorder.png" class="WatchBorder-image" alt="Watch Border Image">
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                 sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+}
 
-            <div class="oval-container">
-                <h1>I'm Simon</h1>
-            </div>
-            <button class="scrollbutton" onclick="scrollslower(2)">Meet me!</button>
+/* Sidebar */
 
-         </div>
-        <h2>
-            About Me
-        </h2>
-        <div class="aboutme">
-            <boxtext>
-                I'm Simon, supersoimon on Github. I build FTC & FRC robots, design custom PCBs for my school and for other personal projects, and love programming!
-                I'm in Grade 11, and my favourite class is Physics! Right now, I'm working on a couple of projects. My favourite is a custom 80% keyboard, and
-                now, I'm working on the physical assembly.  
-            </boxtext>
-        </div>
-        
-            <!--<div class="top-box-side">
-                <h3>About Me</h3>
-                <boxtext>I'm an aspiring grade 11 student who loves to do robotics, programming and lots of other fun stuff! I'm currently in Grade 11.</boxtext>
-                <boxtext>Right now, I'm working on a couple of projects! My favourite is a custom 80% keyboard! I'm currently working on the physical assembly.</boxtext>
-            </div>
-        <imgsty>
-            <img src="IMAGES/Keyboard.png" class="front-image" alt="PCB Design for Keyboard">
-        </imgsty>
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: var(--sidebar);
+    border-right: 1px solid var(--border);
+    padding: 30px 22px;
+    overflow-y: auto;
+}
+
+.logo {
+    font-size: 19px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.logo span {
+    color: var(--accent);
+}
+
+.subtitle {
+    color: var(--muted);
+    font-size: 12px;
+    margin-bottom: 35px;
+}
+
+.nav-heading {
+    color: var(--muted);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 24px 0 10px;
+}
+
+.sidebar a {
+    display: block;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 14px;
+    padding: 7px 10px;
+    border-radius: 6px;
+    margin: 2px 0;
+}
+
+.sidebar a:hover {
+    color: var(--text);
+    background: var(--surface);
+}
+
+/* Main content */
+
+main {
+    margin-left: 250px;
+    max-width: 1050px;
+    padding: 65px 75px;
+}
+
+.tag {
+    color: var(--green);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+h1 {
+    font-size: 42px;
+    margin: 12px 0;
+    letter-spacing: -1px;
+}
+
+h2 {
+    font-size: 25px;
+    margin: 45px 0 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+}
+
+h3 {
+    font-size: 17px;
+    margin: 25px 0 10px;
+}
+
+p {
+    color: var(--muted);
+    margin: 12px 0;
+}
+
+a {
+    color: var(--accent);
+}
+
+.hero {
+    padding: 35px 0 45px;
+}
+
+.hero p {
+    font-size: 17px;
+    max-width: 650px;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin: 30px 0;
+}
+
+.info-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px;
+}
+
+.info-card strong {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.info-card span {
+    font-size: 13px;
+    color: var(--muted);
+}
+
+/* Code blocks */
+
+pre {
+    background: #010409;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    overflow-x: auto;
+    margin: 15px 0;
+}
+
+code {
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 13px;
+    color: #79c0ff;
+}
+
+/* Tables */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 14px;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+}
+
+th {
+    color: var(--text);
+}
+
+td {
+    color: var(--muted);
+}
+
+/* Lists */
+
+ul {
+    margin: 12px 0 12px 25px;
+    color: var(--muted);
+}
+
+li {
+    margin: 6px 0;
+}
+
+/* Timeline */
+
+.timeline {
+    border-left: 2px solid var(--border);
+    margin: 25px 0;
+    padding-left: 25px;
+}
+
+.timeline-item {
+    margin-bottom: 25px;
+    position: relative;
+}
+
+.timeline-item::before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    background: var(--accent);
+    border-radius: 50%;
+    position: absolute;
+    left: -31px;
+    top: 9px;
+}
+
+.timeline-item strong {
+    display: block;
+}
+
+/* Footer */
+
+footer {
+    margin-top: 80px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 12px;
+}
+
+/* Mobile */
+
+@media(max-width: 800px) {
+    .sidebar {
+        display: none;
+    }
+
+    main {
+        margin-left: 0;
+        padding: 35px 22px;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    h1 {
+        font-size: 32px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+
+<nav class="sidebar">
+
+    <div class="logo">CORDIC<span>.</span></div>
+    <div class="subtitle">Hardware Development Journal</div>
+
+    <div class="nav-heading">Documentation</div>
+    <a href="#overview">Overview</a>
+    <a href="#architecture">Architecture</a>
+    <a href="#interface">Hardware Interface</a>
+
+    <div class="nav-heading">Development</div>
+    <a href="#implementation">Implementation</a>
+    <a href="#testing">Simulation & Testing</a>
+    <a href="#progress">Development Log</a>
+
+    <div class="nav-heading">Resources</div>
+    <a href="#repository">Source Code</a>
+
+</nav>
+
+
+<!-- MAIN CONTENT -->
+
+<main>
+
+    <section class="hero" id="overview">
+
+        <div class="tag">Hardware Engineering Project</div>
+
+        <h1>CORDIC Accelerator</h1>
+
         <p>
-            You can check this out on my github page <a href="https://github.com/supersoimon/big-keyboard">HERE</a>
-        </p>-->
-        <h2>
-            My Projects
-        </h2>
-        <div class="box-container">
-            <div class="box">
-                <h3>Keyboard</h3>
-                <boxtext>A custom 80% mechanical keyboard with unique switch configuration and custom case.</boxtext>
-                <boxtext>See the GitHub <a href="https://github.com/supersoimon/big-keyboard">here</a></boxtext> 
-                <img src="IMAGES/KeyboardCAD.png" class="project-image" alt="CAD Design for Keyboard" >
-            </div>
-            <div class="box">
-                <h3>Personal Website</h3>
-                <boxtext>A custom website showcasing my projects, skills, and some stuff about me! (Done in HTML and CSS)</boxtext>
-                <boxtext>See the GitHub <a href="https://github.com/supersoimon/supersoimon.github.io">here</a></boxtext>
-                <img src="IMAGES/Website.png" class="project-image" alt="Personal Website" >
+            A custom hardware accelerator implementing the
+            Coordinate Rotation Digital Computer (CORDIC)
+            algorithm using Verilog HDL.
+        </p>
 
-            </div>
-            <div class="box">
-                <h3>Watchy the Watch!</h3>
-                <boxtext>A fully custom watch with a unique design and case.</boxtext>
-                <boxtext>See the GitHub <a href="https://github.com/supersoimon/big-keyboard">here.</a></boxtext>
-                <boxtext>No images yet :(</boxtext>
-            </div>
-        </div>
-        <h2>
-            Contact Me
-        </h2>
-        <div class="socials">
-            <boxtext>
-                You can reach me on LinkedIn <a href="https://www.linkedin.com/in/simon-gidrewicz-6b2854324/">here</a>  
-            </boxtext>
-        </div>
-        <script>
-            function scrolldown() {
-                window.scrollBy({
-                    top: window.innerHeight,
-                    left: 0,
-                    behavior: 'smooth'
-                })
-            }
-            function scrollslower() {
-                let scrollSpeed = 20; // Adjust this value to control the speed of scrolling
-                const startPos = window.scrollY;
-                const targetPos = Math.min(
-                    startPos + window.innerHeight,
-                    document.documentElement.scrollHeight - window.innerHeight
-                );
-                function scrolling() {
-                    const error = targetPos - window.scrollY;
-                    if (window.scrollY > (targetPos * 0.9)) {
-                        scrollSpeed = 0.001 * (error) * (error) + 2;
-                    }
-                    if (error < 0.5) {
-                        window.scrollTo(0, targetPos);
-                        return;
-                    }
-                    window.scrollBy(0, Math.min(scrollSpeed, error)); 
-                    requestAnimationFrame(scrolling);
+        <div class="info-grid">
 
-                }
-                requestAnimationFrame(scrolling);
-            }
-        </script>
-    </body>
+            <div class="info-card">
+                <strong>Language</strong>
+                <span>Verilog HDL</span>
+            </div>
+
+            <div class="info-card">
+                <strong>Architecture</strong>
+                <span>Iterative CORDIC</span>
+            </div>
+
+            <div class="info-card">
+                <strong>Platform</strong>
+                <span>Tiny Tapeout</span>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ARCHITECTURE -->
+
+    <section id="architecture">
+
+        <h2>01. Architecture</h2>
+
+        <p>
+            CORDIC is an iterative mathematical algorithm
+            that uses additions, subtractions, and bit shifts
+            to perform operations such as trigonometric
+            calculations.
+        </p>
+
+        <h3>Rotation Mode</h3>
+
+        <p>
+            The accelerator uses successive iterations to
+            rotate an initial vector towards a target angle.
+            Each iteration adjusts the vector and reduces
+            the remaining angular error.
+        </p>
+
+        <pre><code>x_next = x - (y >>> i)
+y_next = y + (x >>> i)
+z_next = z - atan(2^-i)</code></pre>
+
+        <h3>Hardware Components</h3>
+
+        <ul>
+            <li>Rotation module</li>
+            <li>Angle lookup table</li>
+            <li>Control logic</li>
+            <li>Iteration counter</li>
+            <li>Input/output interface</li>
+        </ul>
+
+    </section>
+
+
+    <!-- INTERFACE -->
+
+    <section id="interface">
+
+        <h2>02. Hardware Interface</h2>
+
+        <p>
+            The top-level module manages communication
+            between the external interface and the internal
+            CORDIC implementation.
+        </p>
+
+        <h3>Top-Level Signals</h3>
+
+        <table>
+            <tr>
+                <th>Signal</th>
+                <th>Direction</th>
+                <th>Description</th>
+            </tr>
+
+            <tr>
+                <td>clk</td>
+                <td>Input</td>
+                <td>System clock</td>
+            </tr>
+
+            <tr>
+                <td>rst_n</td>
+                <td>Input</td>
+                <td>Active-low reset</td>
+            </tr>
+
+            <tr>
+                <td>start</td>
+                <td>Input</td>
+                <td>Starts computation</td>
+            </tr>
+
+            <tr>
+                <td>x_pos</td>
+                <td>Output</td>
+                <td>Final X coordinate</td>
+            </tr>
+
+            <tr>
+                <td>y_pos</td>
+                <td>Output</td>
+                <td>Final Y coordinate</td>
+            </tr>
+
+            <tr>
+                <td>step</td>
+                <td>Output</td>
+                <td>Current iteration</td>
+            </tr>
+
+            <tr>
+                <td>busy</td>
+                <td>Output</td>
+                <td>Indicates active computation</td>
+            </tr>
+        </table>
+
+    </section>
+
+
+    <!-- IMPLEMENTATION -->
+
+    <section id="implementation">
+
+        <h2>03. Implementation</h2>
+
+        <p>
+            The accelerator is implemented using modular
+            Verilog design, separating the computational
+            logic from the control and lookup logic.
+        </p>
+
+        <h3>Project Structure</h3>
+
+        <pre><code>CORDIC/
+│
+├── RTL/
+│   ├── top.v
+│   ├── rotation.v
+│   └── anglelookup.v
+│
+├── testbench/
+│   └── rotation_tb.v
+│
+├── docs/
+│
+└── README.md</code></pre>
+
+        <h3>Design Considerations</h3>
+
+        <ul>
+            <li>Fixed-point arithmetic</li>
+            <li>Signed binary representation</li>
+            <li>Sequential iteration logic</li>
+            <li>Clock synchronization</li>
+            <li>Hardware resource utilization</li>
+        </ul>
+
+    </section>
+
+
+    <!-- TESTING -->
+
+    <section id="testing">
+
+        <h2>04. Simulation & Testing</h2>
+
+        <p>
+            Before hardware fabrication, the RTL design
+            is validated through simulation using Icarus
+            Verilog.
+        </p>
+
+        <h3>Compilation</h3>
+
+        <pre><code>iverilog -g2012 -o rotation_sim \
+RTL/top.v \
+RTL/rotation.v \
+RTL/anglelookup.v \
+testbench/rotation_tb.v</code></pre>
+
+        <h3>Run Simulation</h3>
+
+        <pre><code>vvp rotation_sim</code></pre>
+
+        <h3>Testing Objectives</h3>
+
+        <ul>
+            <li>Verify correct rotation calculations</li>
+            <li>Validate signed arithmetic</li>
+            <li>Check reset functionality</li>
+            <li>Verify iteration completion</li>
+            <li>Test busy and start signals</li>
+        </ul>
+
+    </section>
+
+
+    <!-- DEVELOPMENT LOG -->
+
+    <section id="progress">
+
+        <h2>05. Development Log</h2>
+
+        <p>
+            A chronological record of the project's
+            development, design decisions, and milestones.
+        </p>
+
+        <div class="timeline">
+
+            <div class="timeline-item">
+                <strong>Project Initialization</strong>
+                <p>
+                    Established the project scope and began
+                    researching the CORDIC algorithm.
+                </p>
+            </div>
+
+            <div class="timeline-item">
+                <strong>RTL Development</strong>
+                <p>
+                    Developed the initial Verilog modules
+                    for the rotation algorithm and angle lookup.
+                </p>
+            </div>
+
+            <div class="timeline-item">
+                <strong>Testbench Development</strong>
+                <p>
+                    Created a simulation environment to
+                    validate the rotation module.
+                </p>
+            </div>
+
+            <div class="timeline-item">
+                <strong>Current Development</strong>
+                <p>
+                    Working on verification, integration,
+                    and hardware interface configuration.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- REPOSITORY -->
+
+    <section id="repository">
+
+        <h2>06. Source Code</h2>
+
+        <p>
+            The complete project source code, including
+            RTL modules, simulation files, and documentation,
+            is maintained in the project repository.
+        </p>
+
+        <p>
+            <a href="https://github.com/" target="_blank">
+                View GitHub Repository →
+            </a>
+        </p>
+
+    </section>
+
+
+    <footer>
+        CORDIC Accelerator · Hardware Development Journal
+        <br>
+        Built with HTML & CSS
+    </footer>
+
+</main>
+
+</body>
 </html>
