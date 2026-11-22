@@ -157,34 +157,56 @@ The goal of this project is to design a CORDIC accelerator using Verilog. The fi
 
     <section id="section3">
         <h2>Architecture</h2>
-        <p>Write here...</p>
-    </section>
+        <p>This ASIC has 4 modules within it; a top level module, a Tiny Tapeout Top Level Module, a angle lookup table, and a rotation calculator. The lookup table and rotation calculator are connected through the top module, which is then fed into the Tiny Tapeout Top Level Module to link it to GPIO outputs.
 
-    <section id="section4">
-        <h2>Implementation</h2>
-        <p>Write here...</p>
+The algorithm performs 15 "rotations". For each rotation, it adjusts the X and Y coordinates, adding/subtracting them to match the angle's position relative to the target angle. Once all the rotations are complete, the algorithm outputs a X and Y coordinate, being the sine and cosine values.</p>
     </section>
-
+   
     <section id="section5">
         <h2>Hardware Interface</h2>
-        <p>Write here...</p>
+        <p>No external hardware is required besides the Tiny Tapeout development board.</p>
     </section>
 
     <section id="section6">
         <h2>Testing</h2>
-        <p>Write here...</p>
+        <p>The project can be tested by communicating with the ASIC through its GPIO pins;
+
+Set the angle: Write the 17-bit signed angle value using the ui_in pins. The angle is written in three 8-bit sections:
+
+uio_in[1:0] selects which byte to write
+
+uio_in[2] acts as the write strobe
+
+ui_in[7:0] carries the byte being written
+
+Start the calculation: Set uio_in[3] high to initiate a calculation
+
+Wait for completion: Select "channel" 6 using uio_in[6:4] to 110 (binary 6) to read the busy status
+
+A value of 1 means the calculation is in progress, while 0 means it has finished
+Read the results: Use uio_in[6:4] to select the output:
+
+000: X coordinate bits [7:0]
+
+001: X coordinate bits [15:8]
+
+010: X coordinate bit [16]
+
+011: Y coordinate bits [7:0]
+
+100: Y coordinate bits [15:8]
+
+101: Y coordinate bit [16]
+
+110: Busy status
+
+The three coordinate sections can be combined to reconstruct the signed 17-bit X and Y values.</p>
     </section>
 
     <section id="section7">
         <h2>Development Log</h2>
         <p>Write here...</p>
     </section>
-
-    <section id="section8">
-        <h2>Future Work</h2>
-        <p>Write here...</p>
-    </section>
-
 </main>
 
 </body>
