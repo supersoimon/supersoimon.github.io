@@ -146,22 +146,22 @@
 
     <section id="section1">
         <h2>Overview</h2>
-        <p>This project is a basic CORDIC accelerator algorithm, designed to output X and Y coordinates representing the sin and cosine values. </p>
+        <p>This project is a basic CORDIC accelerator algorithm, designed to output X and Y coordinates representing the sin and cosine values.</p>
     </section>
 
     <section id="section2">
         <h2>Background</h2>
         <p>The Coordinate Rotation Digital Computer (CORDIC) algorithm is a technique used to perform operations such as trigonometric calculations without heavy multiplication, as CORDIC relies primarily on addition, subtraction, bit shifting, and lookup tables.
-The goal of this project is to design a CORDIC accelerator using Verilog. The final design is intended for fabrication through the Tiny Tapeout platform.</p>
+        The goal of this project is to design a CORDIC accelerator using Verilog. The final design is intended for fabrication through the Tiny Tapeout platform.</p>
     </section>
 
     <section id="section3">
         <h2>Architecture</h2>
-        <p>This ASIC has 4 modules within it; a top level module, a Tiny Tapeout Top Level Module, a angle lookup table, and a rotation calculator. The lookup table and rotation calculator are connected through the top module, which is then fed into the Tiny Tapeout Top Level Module to link it to GPIO outputs.
+        <p>This ASIC has 4 modules within it; a top level module, a Tiny Tapeout Top Level Module, an angle lookup table, and a rotation calculator. The lookup table and rotation calculator are connected through the top module, which is then fed into the Tiny Tapeout Top Level Module to link it to GPIO outputs.</p>
 
-The algorithm performs 15 "rotations". For each rotation, it adjusts the X and Y coordinates, adding/subtracting them to match the angle's position relative to the target angle. Once all the rotations are complete, the algorithm outputs a X and Y coordinate, being the sine and cosine values.</p>
+        <p>The algorithm performs 15 "rotations". For each rotation, it adjusts the X and Y coordinates, adding/subtracting them to match the angle's position relative to the target angle. Once all the rotations are complete, the algorithm outputs an X and Y coordinate, being the sine and cosine values.</p>
     </section>
-   
+
     <section id="section5">
         <h2>Hardware Interface</h2>
         <p>No external hardware is required besides the Tiny Tapeout development board.</p>
@@ -169,44 +169,67 @@ The algorithm performs 15 "rotations". For each rotation, it adjusts the X and Y
 
     <section id="section6">
         <h2>Testing</h2>
-        <p>The project can be tested by communicating with the ASIC through its GPIO pins;
 
-Set the angle: Write the 17-bit signed angle value using the ui_in pins. The angle is written in three 8-bit sections:
+        <p>The project can be tested by communicating with the ASIC through its GPIO pins.</p>
 
-uio_in[1:0] selects which byte to write
+        <ul>
+            <li>
+                <strong>Set the angle</strong>
+                <ul>
+                    <li>Write the 17-bit signed angle value using the <code>ui_in</code> pins.</li>
+                    <li>The angle is written in three 8-bit sections.</li>
+                    <li><code>uio_in[1:0]</code> selects which byte to write.</li>
+                    <li><code>uio_in[2]</code> acts as the write strobe.</li>
+                    <li><code>ui_in[7:0]</code> carries the byte being written.</li>
+                </ul>
+            </li>
 
-uio_in[2] acts as the write strobe
+            <li>
+                <strong>Start the calculation</strong>
+                <ul>
+                    <li>Set <code>uio_in[3]</code> HIGH to initiate a calculation.</li>
+                </ul>
+            </li>
 
-ui_in[7:0] carries the byte being written
+            <li>
+                <strong>Wait for completion</strong>
+                <ul>
+                    <li>Set <code>uio_in[6:4]</code> to <code>110</code> (channel 6) to read the busy status.</li>
+                    <li>A value of <code>1</code> means the calculation is in progress.</li>
+                    <li>A value of <code>0</code> means the calculation has finished.</li>
+                </ul>
+            </li>
 
-Start the calculation: Set uio_in[3] high to initiate a calculation
+            <li>
+                <strong>Read the results</strong>
+                <ul>
+                    <li>Use <code>uio_in[6:4]</code> to select the output channel:</li>
+                    <ul>
+                        <li><code>000</code>: X coordinate bits [7:0]</li>
+                        <li><code>001</code>: X coordinate bits [15:8]</li>
+                        <li><code>010</code>: X coordinate bit [16]</li>
+                        <li><code>011</code>: Y coordinate bits [7:0]</li>
+                        <li><code>100</code>: Y coordinate bits [15:8]</li>
+                        <li><code>101</code>: Y coordinate bit [16]</li>
+                        <li><code>110</code>: Busy status</li>
+                    </ul>
+                </ul>
+            </li>
 
-Wait for completion: Select "channel" 6 using uio_in[6:4] to 110 (binary 6) to read the busy status
-
-A value of 1 means the calculation is in progress, while 0 means it has finished
-Read the results: Use uio_in[6:4] to select the output:
-
-000: X coordinate bits [7:0]
-
-001: X coordinate bits [15:8]
-
-010: X coordinate bit [16]
-
-011: Y coordinate bits [7:0]
-
-100: Y coordinate bits [15:8]
-
-101: Y coordinate bit [16]
-
-110: Busy status
-
-The three coordinate sections can be combined to reconstruct the signed 17-bit X and Y values.</p>
+            <li>
+                <strong>Reconstruct the coordinates</strong>
+                <ul>
+                    <li>Combine the three sections of each coordinate to reconstruct the signed 17-bit X and Y values.</li>
+                </ul>
+            </li>
+        </ul>
     </section>
 
     <section id="section7">
         <h2>Development Log</h2>
         <p>Write here...</p>
     </section>
+
 </main>
 
 </body>
