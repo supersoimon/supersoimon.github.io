@@ -176,27 +176,27 @@
             <li>
                 <strong>Set the angle</strong>
                 <ul>
-                    <li>Write the 17-bit signed angle value using the <code>ui_in</code> pins.</li>
-                    <li>The angle is written in three 8-bit sections.</li>
-                    <li><code>uio_in[1:0]</code> selects which byte to write.</li>
-                    <li><code>uio_in[2]</code> acts as the write strobe.</li>
-                    <li><code>ui_in[7:0]</code> carries the byte being written.</li>
+                    <li>Write the 17-bit signed angle value using the ui_in pins</li>
+                    <li>The angle is written in three 8-bit sections</li>
+                    <li>uio_in[1:0] selects which byte to write</li>
+                    <li>uio_in[2] acts as the write strobe</li>
+                    <li>ui_in[7:0] carries the byte being written</li>
                 </ul>
             </li>
 
             <li>
                 <strong>Start the calculation</strong>
                 <ul>
-                    <li>Set <code>uio_in[3]</code> HIGH to initiate a calculation.</li>
+                    <li>Set uio_in[3] HIGH to initiate a calculation</li>
                 </ul>
             </li>
 
             <li>
                 <strong>Wait for completion</strong>
                 <ul>
-                    <li>Set <code>uio_in[6:4]</code> to <code>110</code> (channel 6) to read the busy status.</li>
-                    <li>A value of <code>1</code> means the calculation is in progress.</li>
-                    <li>A value of <code>0</code> means the calculation has finished.</li>
+                    <li>Set uio_in[6:4] to 110 (channel 6) to read the busy status.</li>
+                    <li>A value of 1 means the calculation is in progress</li>
+                    <li>A value of 0 means the calculation has finished</li>
                 </ul>
             </li>
 
@@ -205,13 +205,13 @@
                 <ul>
                     <li>Use <code>uio_in[6:4]</code> to select the output channel:</li>
                     <ul>
-                        <li><code>000</code>: X coordinate bits [7:0]</li>
-                        <li><code>001</code>: X coordinate bits [15:8]</li>
-                        <li><code>010</code>: X coordinate bit [16]</li>
-                        <li><code>011</code>: Y coordinate bits [7:0]</li>
-                        <li><code>100</code>: Y coordinate bits [15:8]</li>
-                        <li><code>101</code>: Y coordinate bit [16]</li>
-                        <li><code>110</code>: Busy status</li>
+                        <li>000: X coordinate bits [7:0]</li>
+                        <li>001: X coordinate bits [15:8]</li>
+                        <li>010: X coordinate bit [16]</li>
+                        <li>011: Y coordinate bits [7:0]</li>
+                        <li>100: Y coordinate bits [15:8]</li>
+                        <li>101: Y coordinate bit [16]</li>
+                        <li>110: Busy status</li>
                     </ul>
                 </ul>
             </li>
